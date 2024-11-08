@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+            <title></title>
+
+        <!--custom stylesheet-->
+        <link rel="stylesheet" href="css/style.css">
+        <!--external stylesheets-->
+        <link rel="stylesheet" href="lib/leaflet/leaflet.css">
+        <link rel="stylesheet" href="lib/bootstrap.min.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    </head>
+    <body>
+        <audio id="myAudio">
+            <source src="audio/intro.mp3" type="audio/mpeg">
+        </audio>
+        <!--splash screen-->
+        <div class="modal" id="splash-modal">
+            <div class="modal-dialog" id="splash-dialogue">
+                <div class="modal-content" id="splash-content">
+                    <div class="modal-header">
+                        <div class="col-md-6 offset-md-3 col-sm-12 col-12" id="splash-title-container">
+                        </div>
+                    </div>
+                    <div class="modal-body col-md-6 offset-md-3 col-sm-12 col-12" id="splash-body">     
+                        <h1 class="modal-title">Green Shorewood Walking Tour</h1> <p></p>
+                        <div class="audiohome"><button id="homeAudio" onclick="playAudio()" type="button">Play Audio</button></div>
+                        <p></p>
+                        <p><img src='assets/start.png' style='width:100%'></p>
+                        <p>Hello, and welcome to the walking tour of Green Stormwater Infrastructure practices in the Village of Shorewood, located just north of the city of Milwaukee. You should be standing in the Shorewood Public Library atrium located at 3920 N. Murray Ave. Refer to Image #1 and #2 of the Starting Point image carousel to confirm you are in the correct location.
+                            <p>The Village of Shorewood is situated between the Milwaukee River on the west and Lake Michigan on the east, with the Shorewood Public Library sitting at the midpoint between these watery boundaries. Thus, the Shorewood Public Library serves as a vibrant community hub, offering resources for learning, connection, and exploration. The library is a cornerstone of the Shorewood community, and therefore is a perfect place to start our tour of the local Green Stormwater Infrastructure!
+                            <p>Now, let’s dive into the purpose of our tour today. Shorewood’s location between the Milwaukee River and Lake Michigan holds many commercial, recreational, and aesthetic advantages, but also presents a risk: <b>flooding</b> from increasingly frequent and severe storms due to changing climates. Many cities and towns have implemented large underground storm sewer systems and other massive utility projects to move <b>stormwater</b>, or rain from heavy storms that produce flooding. Such large construction projects are described as <b>Gray Stormwater Infrastructure</b> due to their reliance on concrete and other unnatural building materials.  
+                            <p>In contrast, the stops on this tour highlight the innovative “green”, or “environment-friendly” practices that Shorewood has implemented to manage stormwater and to protect it from storms, but also that hold additional benefits to the local community and environment. This collection of practices, known as <b>Green Stormwater Infrastructure</b>, utilize natural solutions to capture and regulate stormwater right where it falls, alleviating reliance on Gray Stormwater Infrastructure. By doing so, Green Stormwater Infrastructure plays a crucial role in contributing to a more resilient and sustainable Shorewood community. 
+                            <p>Today, you will be using an interactive map to follow a <b>green route</b> that will navigate you to roughly ten stops along the tour. Let’s talk a bit about how the interactive map works. If you have your GPS location enabled in your browser, you should see a <b>blue circle</b> on the map. That’s you! You can refer to your current location on the map whenever you are unsure if you are still on the tour route. There also is a static map providing an overview of the entire tour under the <b>“About”</b> tab. 
+                            <p>As you follow the green route on the map, information will appear on your phone for each stop. The <b>green circles</b> represent tour stops at different practices of green stormwater infrastructure, and provide a chance to take a short break from walking during the tour. The green stops contain an <b>audio narration</b> of the Green Stormwater Infrastructure practice at the stop and an <b>image carousel</b> with several images, diagrams, or maps to provide additional context about the stop. You should always stop walking when viewing an image for safety! Use the first image in the carousel at each stop to confirm that you are correctly looking at the green stormwater practice, as sometimes they blend into the local environment…intentionally so to add to the aesthetic beauty of the local community!
+                            <p>The <b>white circles</b> give you additional audio context about Green Stormwater Infrastructure as you walk between stops, and thus you can continue to walk during the white circle audio playback if you feel comfortable doing so. When you enter a circle, green or white, the audio will play automatically, describing the stop and providing directions along the route. Please listen to the full audio clip before you enter the next circle, and you can replay sections of the audio to relate the narration to the images. 
+                            <p>If you prefer to read instead of listen to the audio, you can stop the audio and read the text information on your screen when reach each circle. 
+                            <p>The tour should take approximately 2 hours to complete. The route mostly follows paved sidewalks but includes a stairwell and a dirt path along the Milwaukee River. So, I hope you dressed for the season and wearing appropriate footwear! For those who wish to avoid stairs, an accessible route is available near the Oakleaf Trail Bridge on Capitol Drive. This accessible path is mostly paved but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The accessible route is marked with a <b>dashed green route</b> on the map, and I will alert you when you reach the fork so that you can follow your preferred pathway.
+                            <p>Before starting the tour, please check your device settings to ensure that GPS location services are enabled on both your mobile device and your web browser individually. Please note that you MUST keep your browser screen open throughout the tour to enable automatic audio playback. Therefore, try to minimize use of other apps on your phone during the tour. Make sure your phone is fully charged or bring along an external battery pack for uninterrupted access to the tour. For the best experience, use headphones to listen to the audio. Most importantly, always watch your steps while walking, especially when crossing streets!
+    
+                        <p>Now, click the <b>“Start Tour”</b> button and walk towards the first green circle on the map. If you are facing the library entrance from the atrium, use the door on your left to exit the building. Begin the tour by exploring our first Green Stormwater Infrastructure feature at the northeast corner of the library.  
+                        </p>
+                        <button type="button" id="start" class="btn btn-secondary" data-bs-dismiss="modal">Start Tour</button>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>    
+        <!--stop modal-->
+        <div class="modal" id="stop-modal">
+            <div class="modal-dialog" id="stop-dialogue">
+                <div class="modal-content" id="stop-content">
+                    <div class="modal-header">
+                        <div class="col-md-6 offset-md-3 col-sm-12 col-12" id="title-container">
+                            <h1 class="modal-title" id="stop-title"></h1>
+                            <button id="play-audio">Play Audio</button>
+                        </div>
+                        <button type="button" id="x" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body col-md-6 offset-md-3 col-sm-12 col-12" id="stop-body"></div>
+                    <div id="stop-footer" class="modal-footer">
+                        <button type="button" id="prev" class="btn btn-secondary close" data-bs-dismiss="modal">Prev</button>
+                        <button type="button" id="next" class="btn btn-secondary close" data-bs-dismiss="modal">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>          
+        <!--map-->
+        <div id="map"></div>
+        <!--center button-->
+        <button id="center">Center</button>
+        <button id="about">About</button>
+        <!--external scripts-->
+        <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
+        <script type="text/javascript" src="lib/papaparse.js"></script>
+        <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+        <!--custom scripts-->
+        <script type="text/javascript" src="js/main.js"></script>
+
+        <script>
+            var sound = document.getElementById("myAudio");
+            function playAudio(){
+                if(document.querySelector("#homeAudio").innerHTML == "Play Audio"){
+                    document.querySelector("#homeAudio").innerHTML = "Stop Audio"    
+                    sound.play();
+                }
+                else{
+                    document.querySelector("#homeAudio").innerHTML = "Play Audio"    
+                    sound.pause();
+                    sound.currentTime = 0;
+                }
+            } 
+        </script>
+    </body>
+</html>

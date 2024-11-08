@@ -1,0 +1,13 @@
+id,stop,name,audio,lat,lon,text,image,radius
+1,1,"StormGUARDen","stop8.mp3",43.087863,-87.88449,"1",4,15
+2,1,"Parking Lot Swale","stop8.mp3",43.087465,-87.887659,"2",4,15
+3,1,"Student Garden - Shorewood High School","stop8.mp3",43.087843,-87.887968,"3",4,15
+4,1,"Capitol Drive Biofiltration Structures I","stop8.mp3",43.089004,-87.888056,"4",4,15
+5,1,"Capitol Drive Biofiltration Structures II","stop8.mp3",43.088956,-87.890727,"5",4,15
+6,1,"Tree","stop8.mp3",43.088972,-87.892742,"6",4,15
+7,1,"Capitol Drive Biofiltration Structures III","stop8.mp3",43.088961,-87.893559,"7",4,15
+8,1,"Bio-Swale at Oak Leaf Trail and E. Capitol Avenue","stop8.mp3",43.088404,-87.894916,"8",4,15
+9,1,"Milwaukee River Bank Restoration: South side of E. Capitol Drive","stop8.mp3",43.088782,-87.897675,"9",4,15
+10,1,"Milwaukee River - Stream Data Focus","stop8.mp3",43.086067,-87.893529,"10",4,15
+11,1,"Stormwater Collector (Accessible Route)","stop8.mp3",43.086242,-87.893062,"11",4,15
+12,1,"Hubbard Park Parking Lot","stop8.mp3",43.083788,-87.890646,"12",4,15
