@@ -73,6 +73,8 @@
                     currentLayer = lightMode;
                 }
             });
+
+            document.querySelector("#center").addEventListener("click",getLocation)
         
             buffers = L.layerGroup().addTo(map);
         
@@ -80,10 +82,45 @@
             addRoute();
             addStops();
             addWarnings();
-            map.locate({ setView: false, watch: true, enableHighAccuracy: true });
+            //map.locate({ setView: false, watch: true, enableHighAccuracy: true });
         }
     //location findinging function
-    function onLocationFound(e){
+    function getLocation(){
+        map.locate({setView:true, watch:true, enableHighAccuracy: true} );
+        console.log("locate")
+        function onLocationFound(e){
+            console.log("sup")
+            let radius = e.accuracy / 2;
+            //removes marker and circle before adding a new one
+            if (locationMarker){
+                map.removeLayer(circle);
+                map.removeLayer(locationMarker);
+            }
+            //adds location and accuracy information to the map
+            if (e.accuracy < 90){
+                circle = L.circle(e.latlng, {radius:radius, interactive:false}).addTo(map);
+                locationMarker = L.marker(e.latlng,{interactive:false}).addTo(map);
+                //locationMarker = L.marker(e.latlng).addTo(map).bindPopup("You are within " + Math.round(radius) + " meters of this point");
+            }
+            //if accuracy is less than 60m then stop calling locate function
+            if (e.accuracy < 40){
+                let count = 0;
+                map.stopLocate();
+                count++;
+            }
+        }
+    
+        map.on('locationfound', onLocationFound);
+
+        //activate location at a regular interval
+        window.setInterval( function(){
+            map.locate({
+                setView: false,
+                enableHighAccuracy: true
+                });
+        }, 2500);
+    }
+    /*function onLocationFound(e){
         let radius = e.accuracy / 2;
     
         //removes marker and circle before adding a new one
@@ -121,7 +158,7 @@
 
         //removeFoundMarker(circle, locationMarker);
         checkLocation(radius);
-    }
+    }*/
     //add tour route to the map
     function addRoute(){
         fetch("data/Route_new.geojson")
