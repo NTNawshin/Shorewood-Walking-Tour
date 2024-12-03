@@ -15,7 +15,7 @@
     </head>
     <body>
         <audio id="myAudio">
-            <source src="audio/intro.mp3" type="audio/mpeg">
+            <source src="audio/00_StartingPoint.mp3" type="audio/mpeg">
         </audio>
         <!--splash screen-->
         <div class="modal" id="splash-modal">
@@ -29,19 +29,44 @@
                         <h1 class="modal-title">Green Shorewood Walking Tour</h1> <p></p>
                         <div class="audiohome"><button id="homeAudio" onclick="playAudio()" type="button">Play Audio</button></div>
                         <p></p>
-                        <p><img src='assets/start.png' style='width:100%'></p>
-                        <p>Hello, and welcome to the walking tour of Green Stormwater Infrastructure practices in the Village of Shorewood, located just north of the city of Milwaukee. You should be standing in the Shorewood Public Library atrium located at 3920 N. Murray Ave. Refer to Image #1 and #2 of the Starting Point image carousel to confirm you are in the correct location.
-                            <p>The Village of Shorewood is situated between the Milwaukee River on the west and Lake Michigan on the east, with the Shorewood Public Library sitting at the midpoint between these watery boundaries. Thus, the Shorewood Public Library serves as a vibrant community hub, offering resources for learning, connection, and exploration. The library is a cornerstone of the Shorewood community, and therefore is a perfect place to start our tour of the local Green Stormwater Infrastructure!
-                            <p>Now, let’s dive into the purpose of our tour today. Shorewood’s location between the Milwaukee River and Lake Michigan holds many commercial, recreational, and aesthetic advantages, but also presents a risk: <b>flooding</b> from increasingly frequent and severe storms due to changing climates. Many cities and towns have implemented large underground storm sewer systems and other massive utility projects to move <b>stormwater</b>, or rain from heavy storms that produce flooding. Such large construction projects are described as <b>Gray Stormwater Infrastructure</b> due to their reliance on concrete and other unnatural building materials.  
-                            <p>In contrast, the stops on this tour highlight the innovative “green”, or “environment-friendly” practices that Shorewood has implemented to manage stormwater and to protect it from storms, but also that hold additional benefits to the local community and environment. This collection of practices, known as <b>Green Stormwater Infrastructure</b>, utilize natural solutions to capture and regulate stormwater right where it falls, alleviating reliance on Gray Stormwater Infrastructure. By doing so, Green Stormwater Infrastructure plays a crucial role in contributing to a more resilient and sustainable Shorewood community. 
-                            <p>Today, you will be using an interactive map to follow a <b>green route</b> that will navigate you to roughly ten stops along the tour. Let’s talk a bit about how the interactive map works. If you have your GPS location enabled in your browser, you should see a <b>blue circle</b> on the map. That’s you! You can refer to your current location on the map whenever you are unsure if you are still on the tour route. There also is a static map providing an overview of the entire tour under the <b>“About”</b> tab. 
-                            <p>As you follow the green route on the map, information will appear on your phone for each stop. The <b>green circles</b> represent tour stops at different practices of green stormwater infrastructure, and provide a chance to take a short break from walking during the tour. The green stops contain an <b>audio narration</b> of the Green Stormwater Infrastructure practice at the stop and an <b>image carousel</b> with several images, diagrams, or maps to provide additional context about the stop. You should always stop walking when viewing an image for safety! Use the first image in the carousel at each stop to confirm that you are correctly looking at the green stormwater practice, as sometimes they blend into the local environment…intentionally so to add to the aesthetic beauty of the local community!
-                            <p>The <b>white circles</b> give you additional audio context about Green Stormwater Infrastructure as you walk between stops, and thus you can continue to walk during the white circle audio playback if you feel comfortable doing so. When you enter a circle, green or white, the audio will play automatically, describing the stop and providing directions along the route. Please listen to the full audio clip before you enter the next circle, and you can replay sections of the audio to relate the narration to the images. 
-                            <p>If you prefer to read instead of listen to the audio, you can stop the audio and read the text information on your screen when reach each circle. 
-                            <p>The tour should take approximately 2 hours to complete. The route mostly follows paved sidewalks but includes a stairwell and a dirt path along the Milwaukee River. So, I hope you dressed for the season and wearing appropriate footwear! For those who wish to avoid stairs, an accessible route is available near the Oakleaf Trail Bridge on Capitol Drive. This accessible path is mostly paved but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The accessible route is marked with a <b>dashed green route</b> on the map, and I will alert you when you reach the fork so that you can follow your preferred pathway.
-                            <p>Before starting the tour, please check your device settings to ensure that GPS location services are enabled on both your mobile device and your web browser individually. Please note that you MUST keep your browser screen open throughout the tour to enable automatic audio playback. Therefore, try to minimize use of other apps on your phone during the tour. Make sure your phone is fully charged or bring along an external battery pack for uninterrupted access to the tour. For the best experience, use headphones to listen to the audio. Most importantly, always watch your steps while walking, especially when crossing streets!
-    
-                        <p>Now, click the <b>“Start Tour”</b> button and walk towards the first green circle on the map. If you are facing the library entrance from the atrium, use the door on your left to exit the building. Begin the tour by exploring our first Green Stormwater Infrastructure feature at the northeast corner of the library.  
+                        <div class='w3-content w3-display-container'>
+                            <div class="image-container-home" style="position:relative; width:100%;">
+                                <img class="mySlidesHome" src="assets/home/1.png" style="width:100%">
+                                <div class="top-right-text" style="position:absolute; top:10px; right:10px; color:white; background:rgba(0, 0, 0, 0.3); padding:5px; border-radius:3px;">
+                                    1
+                                </div>
+                            </div>
+                            <div class="image-container-home" style="position:relative; width:100%;">
+                                <img class="mySlidesHome" src="assets/home/2.png" style="width:100%">
+                                <div class="top-right-text" style="position:absolute; top:10px; right:10px; color:white; background:rgba(0, 0, 0, 0.3); padding:5px; border-radius:3px;">
+                                    2
+                                </div>
+                            </div>
+                            <div class="image-container-home" style="position:relative; width:100%;">
+                                <img class="mySlidesHome" src="assets/home/3.png" style="width:100%">
+                                <div class="top-right-text" style="position:absolute; top:10px; right:10px; color:white; background:rgba(0, 0, 0, 0.3); padding:5px; border-radius:3px;">
+                                    3
+                                </div>
+                            </div>
+                            <div class="image-container-home" style="position:relative; width:100%;">
+                                <img class="mySlidesHome" src="assets/home/4.png" style="width:100%">
+                                <div class="top-right-text" style="position:absolute; top:10px; right:10px; color:white; background:rgba(0, 0, 0, 0.3); padding:5px; border-radius:3px;">
+                                    4
+                                </div>
+                            </div>
+                            <button class='w3-button w3-black w3-display-left' id='play-left-home' style='opacity: 0.3; font-size: 32px !important; padding: 5px 5px;'>&#10094;</button>
+                            <button class='w3-button w3-black w3-display-right' id='play-right-home' style='opacity: 0.3; font-size: 32px !important; padding: 5px 5px;'>&#10095;</button>
+                        </div>
+                        <p><br>Hello, and welcome to the walking tour of Green Stormwater Infrastructure in the Village of Shorewood in Milwaukee County. You should be standing in the Shorewood Public Library atrium. Refer to Image #1 and #2 of the Starting Point image carousel to confirm you are in the correct location.  
+                            <p>The Village of Shorewood is situated between the Milwaukee River on the west and Lake Michigan on the east, with the Shorewood Public Library sitting at the midpoint between these watery boundaries. Thus, the Shorewood Public Library serves as a vibrant community hub, offering resources for learning, connection, and exploration. The library is a cornerstone of the Shorewood community, and therefore is a perfect place to start our tour of local Green Stormwater Infrastructure!
+                            <p>Now, let’s dive into the purpose of our tour today. Shorewood’s location between the Milwaukee River and Lake Michigan holds many commercial, recreational, and aesthetic advantages, but also presents a risk: <b>flooding</b> from increasingly frequent and severe storms due to changing climates. Many cities and towns have implemented large underground storm sewer systems and other massive utility projects to move <b>stormwater</b>, or rain from heavy storms that produces flooding. Such large construction projects are described as <b>Gray Stormwater Infrastructure</b> due to their reliance on concrete and other unnatural building materials.  
+                            <p>In contrast, the stops on this tour highlight the innovative <b>“green”</b>, or environmentally-friendly, practices that Shorewood has implemented to manage stormwater and protect it from flooding, but also that hold co-benefits to the local community and environment. This collection of practices, known as <b>Green Stormwater Infrastructure</b>, utilize natural solutions to capture and regulate stormwater right where it falls, alleviating reliance on Gray Stormwater Infrastructure. By doing so, Green Stormwater Infrastructure plays a crucial role in contributing to a more resilient and sustainable Shorewood community.
+                            <p>Today, you will be using an interactive map to follow a <b>green route</b> that will navigate you to <b>10 stops</b> along the tour. Let’s talk a bit about how the interactive map works. If you have your GPS location enabled in your mobile browser, you should see a <b>blue circle</b> on the map. That’s you! You can refer to your current location on the map whenever you are unsure if you are still on the tour route. There also is a static map providing an overview of the entire tour under the “Menu” tab.
+                            <p>As you follow the green route on the map, information will appear on your phone for each stop. The <b>green circles</b> represent tour stops at different practices of Green Stormwater Infrastructure, and provide a chance to take a short break from walking during the tour. The green stops contain an <b>audio narration</b> of the Green Stormwater Infrastructure practice at the stop and an <b>image carousel</b> with several photos, diagrams, or maps to provide additional context about the stop. You should always stop walking when viewing an image for safety! Use the first image in the carousel at each stop to confirm that you are correctly looking at the Green Stormwater Infrastructure practice, as sometimes they blend into the local environment…intentionally so to add to the aesthetic beauty of the local community!
+                            <p>The <b>white circles</b> give you additional audio context about Green Stormwater Infrastructure as you walk between stops, and thus you can continue to walk during the white circle audio playback if you feel comfortable doing so. When you enter a circle, green or white, the audio will play automatically, describing the stop and providing directions along the route. Please listen to the full audio clip before you enter the next circle, and replay sections of the audio to relate the narration to the images if needed. If you prefer to read instead of listen to the audio, you can stop the audio and read the text information on your screen when you reach each circle.
+                            <p>The tour should take approximately 2 hours to complete. The route mostly follows paved sidewalks but includes a stairwell and a dirt path along the Milwaukee River. So, I hope you are dressed for the season and wearing appropriate footwear! For those who wish to avoid stairs, an alternate accessible route is available near the Oakleaf Trail Bridge on Capitol Drive. This accessible path is mostly paved but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The accessible route is marked with a <b>dashed green line</b> on the map, and I will alert you when you reach the fork so that you can follow your preferred pathway.
+                            <p>Before starting the tour, please check your device settings to ensure that GPS location services are enabled on both your mobile device and your web browser individually. Please note that <b>you MUST keep your browser screen open throughout the tour to enable automatic audio playback.</b> Therefore, try to minimize using other apps on your phone during the tour. Make sure your phone is fully charged or bring along an external battery pack for uninterrupted access to the tour. For the best experience, use headphones to listen to the audio. Most importantly, always watch your step while walking, especially when crossing streets!
+                            <p>Now, click the <b>“Start Tour”</b> button and walk towards the first green circle on the map. If you are facing the library entrance from the atrium, use the door on your left to exit the building. Begin the tour by exploring our first Green Stormwater Infrastructure feature at the northeast corner of the library.      
                         </p>
                         <button type="button" id="start" class="btn btn-secondary" data-bs-dismiss="modal">Start Tour</button>
                     </div>
@@ -49,7 +74,80 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>   
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-expand-md navbar-light bg-light">
+            <div class="container-fluid">
+                <button id="menu-toggle-button" class="menu-toggler collapsed d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-nav" aria-controls="navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    Menu<!--img class="menu-icon" src="img/icons/menu-white.png"-->
+                </button>
+                <div class="collapse navbar-collapse" id="navbar-nav">
+                    <ul class="navbar-nav">
+                        
+                        <li class="nav-item">
+                            <a class="nav-link non-landmark" href="#" data-bs-toggle="modal" data-bs-target="#maps-modal">
+                                <!--img class="help" src="img/icons/help.png" alt="Help"-->
+                                Maps
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link non-landmark" href="#" data-bs-toggle="modal" data-bs-target="#help-modal">
+                                <!--img class="about" src="img/icons/information.png" alt="About"-->
+                                Help
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link non-landmark" href="#" data-bs-toggle="modal" data-bs-target="#about-modal">
+                                <!--img class="text" src="img/icons/text.png" alt="Text"-->
+                                About
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Maps -->
+        <div class="modal fade" id="maps-modal" tabindex="-1" aria-labelledby="maps-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="Maps-modal-label">Maps</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Help -->
+        <div class="modal fade" id="help-modal" tabindex="-1" aria-labelledby="help-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="help-modal-label">Help</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About -->
+        <div class="modal fade" id="about-modal" tabindex="-1" aria-labelledby="about-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="about-modal-label">About</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                </div>
+            </div>
+        </div> 
         <!--stop modal-->
         <div class="modal" id="stop-modal">
             <div class="modal-dialog" id="stop-dialogue">
@@ -64,7 +162,7 @@
                     <div class="modal-body col-md-6 offset-md-3 col-sm-12 col-12" id="stop-body"></div>
                     <div id="stop-footer" class="modal-footer">
                         <button type="button" id="prev" class="btn btn-secondary close" data-bs-dismiss="modal">Prev</button>
-                        <button type="button" id="next" class="btn btn-secondary close" data-bs-dismiss="modal">Next</button>
+                        <button type="button" id="next" class="btn btn-secondary close" data-bs-dismiss="modal" style="margin-right: 30px;">Next</button>
                     </div>
                 </div>
             </div>
@@ -72,8 +170,9 @@
         <!--map-->
         <div id="map"></div>
         <!--center button-->
-        <button id="center">Center</button>
-        <button id="about">About</button>
+        <button id="center">
+            <img src="lib/leaflet/images/center.png" alt="Center Map" style="width:24px; height:24px;">
+        </button>
         <!--external scripts-->
         <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
         <script type="text/javascript" src="lib/papaparse.js"></script>

@@ -21,6 +21,7 @@
     let startPosition = [43.0877073,-87.88484659]
 
     let slideIndex = 1
+    let slideIndexHome = 1
 
     //splash screen modal variables
     let splash = document.getElementById('splash-modal'),
@@ -30,53 +31,57 @@
     let stop = document.getElementById('stop-modal'),
         stopModal = new bootstrap.Modal(stop);
 
-    function createMap(){
-        map = L.map("map",{
-            center: startPosition,
-            zoom:17,
-            maxZoom:18,
-            minZoom:12
-        });
-        //set basemap tileset
-        let basemap = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 20
-        }).addTo(map);
+    
 
-        buffers = L.layerGroup().addTo(map);
-
-        //location listener
-        map.on('locationfound', onLocationFound);
-        //don't automatically center the map if the map has been panned
-        map.on("mousedown",function(ev){
-            //turn off map centering if map is panned
-            if (ev.originalEvent.originalTarget.id == "map")
-                center = false;
-
-            document.querySelector("#center").style.display = "block";
-        })
-        //set click listener for the center map button
-        document.querySelector("#center").addEventListener("click", function(event){
-            map.locate({setView:false, watch:true, enableHighAccuracy: true});
-            center = true;
-        })
-        document.querySelector("#about").addEventListener("click", function(event){
-            alert("New button clicked!");
-        })
-        //center map on location at interval
-        window.setInterval( function(){
-            map.locate({
-                enableHighAccuracy: true
+        function createMap() {
+            map = L.map("map", {
+                center: startPosition,
+                zoom: 17,
+                maxZoom: 18,
+                minZoom: 12
             });
-        }, 5000);
-        //add stop data
-        addRoute();
-        addStops();
-        addWarnings();
-        //get initial location and center map
-        map.locate({setView:false, watch:true, enableHighAccuracy: true});
-    }
+        
+            let lightMode = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
+            }).addTo(map);
+        
+            let darkMode = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+                subdomains: 'abcd',
+                maxZoom: 20
+            });
+        
+            let currentLayer = lightMode;
+        
+            // Dynamically create the button
+            let toggleButton = document.createElement("button");
+            toggleButton.id = "toggle-dark-mode";
+            toggleButton.innerHTML = '<img src="lib/leaflet/images/layers2.png" alt="Dark Mode" style="width:24px; height:24px;">';
+            document.body.appendChild(toggleButton);
+        
+            // Add event listener for the button
+            toggleButton.addEventListener("click", () => {
+                if (currentLayer === lightMode) {
+                    map.removeLayer(lightMode);
+                    map.addLayer(darkMode);
+                    currentLayer = darkMode;
+                } else {
+                    map.removeLayer(darkMode);
+                    map.addLayer(lightMode);
+                    currentLayer = lightMode;
+                }
+            });
+        
+            buffers = L.layerGroup().addTo(map);
+        
+            // Additional map setup (routes, stops, warnings, etc.)
+            addRoute();
+            addStops();
+            addWarnings();
+            map.locate({ setView: false, watch: true, enableHighAccuracy: true });
+        }
     //location findinging function
     function onLocationFound(e){
         let radius = e.accuracy / 2;
@@ -125,7 +130,7 @@
                 route = L.geoJson(data,{
                     style:{
                         color:routeColor,
-                        weight:3
+                        weight:3.5
                     }
                 }).addTo(map)
             })
@@ -137,7 +142,7 @@
                     style:{
                         color:routeColor,
                         dashArray:"5 10",
-                        weight:2
+                        weight:3.5
                     }
                 }).addTo(map)
             })
@@ -186,7 +191,7 @@
                         if (feature.properties.id == 1){
                             var popup = L.popup()
                                         .setLatLng(latlng)
-                                        .setContent('<p>Starting Point</p>')
+                                        .setContent('<p><b>You started here!</b></p>')
                                         .openOn(map);
                         }
                         //set point styling
@@ -210,6 +215,21 @@
                                     (feature.properties.radius * 2) + 'px; height: ' + 
                                     (feature.properties.radius * 2) + 'px;">' + 
                                     feature.properties.stop + '</div>',
+                                className: 'number-icon',
+                                iconSize: [feature.properties.radius * 2, feature.properties.radius * 2],
+                                iconAnchor: [feature.properties.radius, feature.properties.radius]
+                            });
+
+                            // Create a marker with the number icon and add it to the map
+                            L.marker(latlng, { icon: numberIcon, interactive: false }).addTo(map);
+                        }
+
+                        if(feature.properties.id == 34){
+                            let numberIcon = L.divIcon({
+                                html: '<div style="display: flex; justify-content: center; align-items: center; width: ' + 
+                                    (feature.properties.radius * 2) + 'px; height: ' + 
+                                    (feature.properties.radius * 2) + 'px;">' + 
+                                    "A" + '</div>',
                                 className: 'number-icon',
                                 iconSize: [feature.properties.radius * 2, feature.properties.radius * 2],
                                 iconAnchor: [feature.properties.radius, feature.properties.radius]
@@ -305,31 +325,30 @@
     //set stop color
     function stopColor(props){
         
-        //if(props.id == 12){
-        //    return props.id == currentStop ? "#cca605" : "#f9d950"
-        //}
-        //else{
-        
-        if(props.stop == 0){
-            return props.id == currentStop ? activeStopFill : inactiveStopFill;
+        if(props.id == 34){
+            return props.id == currentStop ? activeMainStopFill : inactiveMainStopFill
         }
         else{
-            return props.id == currentStop ? activeMainStopFill : inactiveMainStopFill;
+            if(props.stop == 0){
+                return props.id == currentStop ? activeStopFill : inactiveStopFill;
+            }
+            else{
+                return props.id == currentStop ? activeMainStopFill : inactiveMainStopFill;
+            }
         }
-        //}
     }
     function stopOutlineColor(props){
-        //if(props.id == 12){
-        //    return props.id == currentStop ? "#f9d950" : "#cca605"
-        //}
-        //else{
-        if(props.stop == 0){
-            return props.id == currentStop ? activeStopOutline : inactiveStopOutline;
+        if(props.id == 34){
+            return props.id == currentStop ? activeMainStopOutline : inactiveMainStopOutline
         }
         else{
-            return props.id == currentStop ? activeMainStopOutline : inactiveMainStopOutline;
+            if(props.stop == 0){
+                return props.id == currentStop ? activeStopOutline : inactiveStopOutline;
+            }
+            else{
+                return props.id == currentStop ? activeMainStopOutline : inactiveMainStopOutline;
+            }
         }
-        //}
     }
     //update stop stype
     function updateStopColor(){
@@ -483,6 +502,10 @@
         showDivs(slideIndex += n);
     }
 
+    function plusDivsHome(n) {
+        showDivsHome(slideIndexHome += n);
+    }
+
     function showDivs(n) {
         var i;
         var x = document.getElementsByClassName("image-container");
@@ -492,6 +515,17 @@
         x[i].style.display = "none";
         }
         x[slideIndex-1].style.display = "block";
+    }
+
+    function showDivsHome(n) {
+        var i;
+        var x = document.getElementsByClassName("image-container-home");
+        if (n > x.length) {slideIndexHome = 1}
+        if (n < 1) {slideIndexHome = x.length} ;
+        for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+        }
+        x[slideIndexHome-1].style.display = "block";
     }
 
     //play audio
@@ -542,5 +576,8 @@
 
     }
 
+    document.getElementById('play-left-home').addEventListener('click', () => plusDivsHome(-1));
+    document.getElementById('play-right-home').addEventListener('click', () => plusDivsHome(1));
+    showDivsHome(slideIndexHome);
     createMap();
 })();

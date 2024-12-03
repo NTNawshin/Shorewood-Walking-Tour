@@ -3,6 +3,8 @@ body{
 }
 h1{
     text-align: center;
+    color: #265c3d;
+    font-weight: bold;
 }
 .audiohome{  
     text-align: center; 
@@ -11,6 +13,7 @@ h1{
     border:2px rgb(64, 153, 64) solid;
     background:rgb(204, 230, 204);
     font-size:16pt !important;
+    border-radius: 5px;
 }
 #map{
     width:100vw;
@@ -25,17 +28,18 @@ button:hover{
     background:rgba(0,0,0,0.3);
 }
 #stop-title {
-    font-family: Tahoma;
-    font-size: 20pt !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 22pt !important;
     padding-bottom: 15px;
+    font-weight: bold;
+    color: #265c3d;
 }
 #play-audio {
-    display: flex;
-    flex-direction: column;
     text-align: center; 
     border:2px rgb(64, 153, 64) solid;
     background:rgb(204, 230, 204);
     font-size:14pt !important;
+    border-radius: 5px;
 }
 /*splash modal*/
 #splash-dialogue, #splash-content, #splash-modal{
@@ -77,7 +81,7 @@ button:hover{
 #stop-body{
     height:100%;
     overflow:scroll;
-    font-size: 18px;
+    font-size: 20px;
 }
 #stop-img{
     width:100%;
@@ -109,16 +113,15 @@ button:hover{
 
 #center {
     display: block;
-    width: 100px;
-    height: 40px;
+    width: 40px;
+    height: 42px;
     position: absolute;
-    bottom: 25px;
-    right: 10px;
+    top: 160px;
+    left: 10px;
     z-index: 400;
-    font-size: 20px;
-    font-weight: bold;
     border: 2px black solid;
     background: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
 }
 
 #center:hover {
@@ -126,12 +129,12 @@ button:hover{
 }
 
 .danger-popup .leaflet-popup-content-wrapper {
-    background-color:red; /* Set your preferred color */
-    color: black; /* Set text color */
+    background-color:rgb(255, 255, 255); /* Set your preferred color */
+    color: rgb(190, 0, 0); /* Set text color */
 }
 
 .danger-popup .leaflet-popup-tip {
-    background-color: red; /* Match the popup background color */
+    background-color: rgb(255, 255, 255); /* Match the popup background color */
 }
 
 .service-popup .leaflet-popup-content-wrapper {
@@ -141,4 +144,92 @@ button:hover{
 
 .service-popup .leaflet-popup-tip {
     background-color: blue; /* Match the popup background color */
+}
+
+#toggle-dark-mode {
+    display:block;
+    position: absolute; /* Position relative to the viewport */
+    top: 212px; /* Distance from the top of the viewport */
+    left: 10px; /* Distance from the right of the viewport */
+    z-index: 400; /* Ensure it appears above map and other elements */
+    border: 2px black solid;
+    background: rgba(255, 255, 255, 0.7);
+    color: rgb(17, 1, 1); /* White text for contrast */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor for better UX */
+    height:42px;
+    width: 42px;
+
+}
+
+.navbar-nav {
+    display: flex; /* Ensure horizontal layout */
+    align-items: center; /* Vertically align items */
+    width: 100%;
+    height: 60px;;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: rgb(183, 212, 183); /* Keep it visually neutral */
+}
+
+
+
+#menu-toggle-button {
+    position: fixed; /* Fix the button to a specific spot on the screen */
+    bottom: 20px; /* Distance from the bottom */
+    right: 20px; /* Distance from the right */
+    z-index: 1000; /* Keep it above other content */
+    font-size: 16px; /* Keep the original font size */
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 8px 23px; /* Adjust padding for better touch target */
+    background-color: rgb(183, 212, 183); /* Keep it visually neutral */
+    border: 2px solid #5d8159; /* Optional: Subtle border for visibility */
+    border-radius: 5px; /* Slightly rounded corners */
+}
+
+@media (min-width: 769px) {
+    .navbar-nav {
+        justify-content: flex-end; /* Ensure items are aligned to the right */
+        margin-right: 1px; /* Add spacing from the right edge */
+        padding: 1px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    #navbar-nav {
+        position: fixed; /* Fix the menu's position */
+        bottom: 60px; /* Place it just above the button */
+        right: 20px; /* Align it with the button on the right */
+        width: auto; /* Adjust width to fit the menu items */
+        height:180px;
+        background-color: rgb(183, 212, 183); /* Match the button's background */
+        z-index: 999; /* Keep it above other elements */
+        padding: 0px; /* Add spacing inside the menu */
+        border-radius: 5px; /* Optional: Rounded corners */
+        border: 1px solid #5d8159; /* Optional: Subtle border for clarity */
+        text-align: center; /* Center-align menu items */
+    }
+
+    #navbar-nav .nav-item {
+        padding: 10px 15px; /* Add spacing between menu items */
+    }
+
+    #navbar-nav .nav-link {
+        color: #000; /* Black text for menu items */
+        font-size: 16px; /* Text size */
+        padding: 6px 11px; /* Add padding for touch-friendly links */
+        text-align: center; /* Center-align the text */
+    }
+}
+
+@media (min-width: 769px) {
+    #stop-body img {
+        max-width: 50%; /* Prevent stretching */
+        height: auto; /* Maintain aspect ratio */
+        display: block; /* Ensure proper block alignment */
+        margin: 0 auto; /* Center the images horizontally */
+    }
+
 }
