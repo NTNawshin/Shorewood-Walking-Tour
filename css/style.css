@@ -22,6 +22,15 @@ h4 {
     border: 2px solid #808080;
 }
 
+.leaflet-control-scale {
+    font-size: 16px !important; /* Adjust size as needed */
+}
+
+.north-arrow p {
+    font-size: 18px !important; /* Adjust size as needed */
+    font-weight: bold; /* Optional: Makes it more visible */
+}
+
 .modal-title {
     font-family: 'Merriweather', serif !important;
 }
@@ -34,6 +43,14 @@ h1 {
     color: #2e8f58 !important;
 }
 
+#button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
 #toggle-font-size{
     background-color: #808080;
     border: 2px solid #808080;
@@ -44,14 +61,6 @@ h1 {
     background-color: #808080;
     border: 2px solid #808080;
     font-size: 20px;
-}
-
-#button-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 900px;
-    margin: 20px auto;
 }
 
 #toggle-font-size {
@@ -95,7 +104,7 @@ h1 {
 }
 
 #map{
-    height:95vh;
+    height:89vh;
 }
 
 /*modal styling*/
@@ -164,4 +173,33 @@ h1 {
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
     filter: invert(120%); /* Adjusts brightness to make it darker */
+}
+
+
+#button-container-stop{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+#toggle-font-size-stop{
+    background-color: #808080;
+    border: 2px solid #808080;
+    font-size: 20px;
+}
+
+#toggle-color-mode-stop{
+    background-color: #808080;
+    border: 2px solid #808080;
+    font-size: 20px;
+}
+
+#toggle-font-size-stop {
+    margin-right: auto; /* Aligns to the left */
+}
+
+#toggle-color-mode-stop {
+    margin-left: auto; /* Aligns to the right */
 }

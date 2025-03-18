@@ -35,6 +35,26 @@
             minZoom: 12
         });
 
+        
+        //add north indicator
+        var northArrow = L.Control.extend({
+            options:{
+                position:"topright"
+            },
+            onAdd: function () {
+                // create the control container with a particular class name
+                var container = L.DomUtil.create('div', 'north-arrow');
+    
+                container.innerHTML = '<p style="color: black;">North &#11014;</p>';
+    
+                return container;
+            }
+        });
+
+        map.addControl(new northArrow());
+
+        L.control.scale({position:'topright'}).addTo(map);
+
         let lightMode = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '',
             subdomains: 'abcd',
@@ -51,14 +71,26 @@
 
         // Add event listener for the button
         document.querySelector("#toggle-dark-mode").addEventListener("click", () => {
+            let northArrowText = document.querySelector(".north-arrow p"); // Select the <p> inside the north-arrow div
+        
             if (currentLayer === lightMode) {
                 map.removeLayer(lightMode);
                 map.addLayer(darkMode);
                 currentLayer = darkMode;
+        
+                // Change North Arrow text color to WHITE in dark mode
+                if (northArrowText) {
+                    northArrowText.style.color = "white";
+                }
             } else {
                 map.removeLayer(darkMode);
                 map.addLayer(lightMode);
                 currentLayer = lightMode;
+        
+                // Change North Arrow text color to BLACK in light mode
+                if (northArrowText) {
+                    northArrowText.style.color = "black";
+                }
             }
         });
 
@@ -451,29 +483,46 @@
         para.textContent = "";
         document.querySelector("#stop-body").appendChild(para);
 
+        let fontncolorbuttonWrapper = document.createElement("div");
+        fontncolorbuttonWrapper.className = "modal-button-container";
+        fontncolorbuttonWrapper.id = "button-container-stop";
+
         // Create "Font Control" button
         let fontControl = document.createElement("button");
         fontControl.textContent = "Change Font Size";
-        fontControl.className = "btn btn-secondary"; // Bootstrap styling
-        fontControl.style.fontSize = "20px";
-        fontControl.style.backgroundColor = "#808080"; // Button color (grey)
+        fontControl.id = "toggle-font-size-stop"
+        fontControl.className = "btn btn-secondary";
+        //fontControl.style.fontSize = "20px";
+        //fontControl.style.backgroundColor = "#808080"; // Button color (grey)
 
         // Close modal when clicked
         fontControl.addEventListener("click", function() {
-            paragraphs = document.querySelectorAll("p");
-            paragraphs.forEach(p => {
-                if (isLargeFont) {
-                    p.style.fontSize = ""; // Reset to default
-                } else {
-                    p.style.fontSize = "28px"; // Adjust as needed
-                }
-            });
-            isLargeFont = !isLargeFont;
+            toggleFontSize();
         });
 
-        // let html = `<br><button id="toggle-font-size-modal" class="btn btn-primary">Change Font Size</button>`;
-        // document.querySelector("#stop-body").insertAdjacentHTML("beforeend", html);
-        document.querySelector("#stop-body").appendChild(fontControl);
+        fontncolorbuttonWrapper.appendChild(fontControl);
+        //document.querySelector("#stop-body").appendChild(fontControl);
+        
+
+        // Create "Color Mode" button
+        let colorControl = document.createElement("button");
+        colorControl.textContent = "Color Mode";
+        colorControl.className = "btn btn-secondary";
+        colorControl.id = "toggle-color-mode-stop"
+        //colorControl.style.fontSize = "20px";
+        //colorControl.style.backgroundColor = "#808080";
+
+        // Add event listener
+        colorControl.addEventListener("click", function() {
+            toggleColorMode();
+        });
+
+        // Append button inside wrapper
+        fontncolorbuttonWrapper.appendChild(colorControl);
+
+        // Append wrapper to the stop modal
+        document.querySelector("#stop-body").appendChild(fontncolorbuttonWrapper);
+
 
         if (props.text){
             let p = "<p id='stop-text'>" + props.text + "</p>";
@@ -573,6 +622,49 @@
         }
     }
 
+    function toggleColorMode() {
+        let body = document.body;
+        let startContainer = document.getElementById("start-container");
+        let stopContainer = document.getElementById("stop-content");
+        let mapinfoContainer = document.getElementById("mapinfo-content");
+        let helpContainer = document.getElementById("help-content");
+        let aboutContainer = document.getElementById("about-content");
+
+        if (isDarkMode) {
+            // Switch to Light Mode
+            body.style.backgroundColor = "white"; // Reset background
+            body.style.color = "black"; // Reset text color
+            if (startContainer) startContainer.style.backgroundColor = "white"; // Ensure container stays white
+            if (stopContainer) stopContainer.style.backgroundColor = "white"; // Ensure container stays white
+            if (mapinfoContainer) mapinfoContainer.style.backgroundColor = "white"; // Ensure container stays white
+            if (helpContainer) helpContainer.style.backgroundColor = "white"; // Ensure container stays white
+            if (aboutContainer) aboutContainer.style.backgroundColor = "white"; // Ensure container stays white
+        } else {
+            // Switch to Dark Mode
+            body.style.backgroundColor = "black"; // Dark background
+            body.style.color = "white"; // White text
+            if (startContainer) startContainer.style.backgroundColor = "black"; // Make container match dark mode
+            if (stopContainer) stopContainer.style.backgroundColor = "black"; // Make container match dark mode
+            if (mapinfoContainer) mapinfoContainer.style.backgroundColor = "black"; // Make container match dark mode
+            if (helpContainer) helpContainer.style.backgroundColor = "black"; // Make container match dark mode
+            if (aboutContainer) aboutContainer.style.backgroundColor = "black"; // Make container match dark mode
+        }
+
+        isDarkMode = !isDarkMode; // Toggle mode state
+    }
+
+    function toggleFontSize() {
+        paragraphs = document.querySelectorAll("p");
+        paragraphs.forEach(p => {
+            if (isLargeFont) {
+                p.style.fontSize = ""; // Reset to default
+            } else {
+                p.style.fontSize = "28px"; // Adjust as needed
+            }
+        });
+        isLargeFont = !isLargeFont;
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
         const startTourButtons = document.querySelectorAll("#start-tour-btn");
         const startContainer = document.getElementById("start-container");
@@ -619,51 +711,15 @@
                 }
             });
         }
-    });     
-
-    document.addEventListener("DOMContentLoaded", function () {
-        const toggleFontSizeButton = document.getElementById("toggle-font-size");
-        // const paragraphs = document.querySelectorAll("p");
-    
-        function toggleFontSize() {
-            paragraphs = document.querySelectorAll("p");
-            paragraphs.forEach(p => {
-                if (isLargeFont) {
-                    p.style.fontSize = ""; // Reset to default
-                } else {
-                    p.style.fontSize = "28px"; // Adjust as needed
-                }
-            });
-            isLargeFont = !isLargeFont;
-        }
-    
-        // Attach event listener for static button
-        if (toggleFontSizeButton) {
-            toggleFontSizeButton.addEventListener("click", toggleFontSize);
-        }
-    
     });
 
     document.addEventListener("DOMContentLoaded", function () {
-        const toggleColorModeButton = document.getElementById("toggle-color-mode");
-        
-        function toggleColorMode() {
-            let body = document.body;
-            let startContainer = document.getElementById("start-container");
-    
-            if (isDarkMode) {
-                // Switch to Light Mode
-                body.style.backgroundColor = ""; // Reset background
-                body.style.color = ""; // Reset text color
-                if (startContainer) startContainer.style.backgroundColor = "white"; // Ensure container stays white
-            } else {
-                // Switch to Dark Mode
-                body.style.backgroundColor = "black"; // Dark background
-                body.style.color = "white"; // White text
-                if (startContainer) startContainer.style.backgroundColor = "black"; // Make container match dark mode
-            }
-    
-            isDarkMode = !isDarkMode; // Toggle mode state
+        let toggleColorModeButton = document.getElementById("toggle-color-mode");
+        let toggleFontSizeButton = document.getElementById("toggle-font-size");
+
+        // Attach event listener for static button
+        if (toggleFontSizeButton) {
+            toggleFontSizeButton.addEventListener("click", toggleFontSize);
         }
     
         // Attach event listener for static button
