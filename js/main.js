@@ -45,7 +45,7 @@
                 // create the control container with a particular class name
                 var container = L.DomUtil.create('div', 'north-arrow');
     
-                container.innerHTML = '<p style="color: black;">North &#11014;</p>';
+                container.innerHTML = '<p style="color: grey;">North &#11014;</p>';
     
                 return container;
             }
@@ -80,7 +80,7 @@
         
                 // Change North Arrow text color to WHITE in dark mode
                 if (northArrowText) {
-                    northArrowText.style.color = "white";
+                    northArrowText.style.color = "#808080";
                 }
             } else {
                 map.removeLayer(darkMode);
@@ -89,7 +89,7 @@
         
                 // Change North Arrow text color to BLACK in light mode
                 if (northArrowText) {
-                    northArrowText.style.color = "black";
+                    northArrowText.style.color = "#808080";
                 }
             }
         });
