@@ -48,6 +48,7 @@ p {
 
 h1 {
     color: #2e8f58 !important;
+    font-size: 26px !important;
 }
 
 #button-container {
@@ -179,7 +180,7 @@ h1 {
 /* Darken the carousel arrows */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    filter: invert(120%); /* Adjusts brightness to make it darker */
+    filter: invert(220%); /* Adjusts brightness to make it darker */
 }
 
 
