@@ -51,9 +51,9 @@
             }
         });
 
-        map.addControl(new northArrow());
-
         L.control.scale({position:'topright'}).addTo(map);
+
+        map.addControl(new northArrow());
 
         let lightMode = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
             attribution: '',
@@ -66,6 +66,8 @@
             subdomains: 'abcd',
             maxZoom: 20
         });
+
+        map.on('locationfound', onLocationFound);
 
         let currentLayer = lightMode;
 
@@ -101,33 +103,6 @@
         addRoute();
         addStops();
         addWarnings();
-    }
-
-    //location findinging function
-    function getLocation() {
-        map.locate({ setView: true, watch: true, enableHighAccuracy: true });
-        function onLocationFound(e) {
-            let radius = e.accuracy / 2;
-            //removes marker and circle before adding a new one
-            if (locationMarker) {
-                map.removeLayer(circle);
-                map.removeLayer(locationMarker);
-            }
-            //adds location and accuracy information to the map
-            if (e.accuracy < 90) {
-                circle = L.circle(e.latlng, { radius: radius, interactive: false }).addTo(map);
-                locationMarker = L.marker(e.latlng, { interactive: false }).addTo(map);
-                //locationMarker = L.marker(e.latlng).addTo(map).bindPopup("You are within " + Math.round(radius) + " meters of this point");
-            }
-            //if accuracy is less than 60m then stop calling locate function
-            if (e.accuracy < 40) {
-                let count = 0;
-                map.stopLocate();
-                count++;
-            }
-        }
-
-        map.on('locationfound', onLocationFound);
 
         //activate location at a regular interval
         window.setInterval(function () {
@@ -136,6 +111,39 @@
                 enableHighAccuracy: true
             });
         }, 2500);
+        //getLocation();
+    }
+
+    function onLocationFound(e) {
+        console.log("Location Found");
+        let radius = e.accuracy / 2;
+        //removes marker and circle before adding a new one
+        if (locationMarker) {
+            map.removeLayer(circle);
+            map.removeLayer(locationMarker);
+        }
+        //adds location and accuracy information to the map
+        if (e.accuracy < 90) {
+            circle = L.circle(e.latlng, { radius: radius, interactive: false }).addTo(map);
+            locationMarker = L.marker(e.latlng, { interactive: false }).addTo(map);
+        }
+
+        for (let layer of stops.getLayers()) {
+            let stopLatLng = layer.getLatLng();
+            let stopRadius = layer.options.radius;
+            let distance = map.distance(e.latlng, stopLatLng);
+        
+            if (distance <= stopRadius && !played.includes(layer.feature.properties.id)) {
+                played.push(layer.feature.properties.id);
+                openModal(layer.feature.properties);
+                break;
+            }
+        }
+    }
+
+    //location findinging function
+    function getLocation() {
+        map.locate({ setView: true, enableHighAccuracy: true });
     }
 
     function addRoute() {
@@ -459,6 +467,7 @@
                 </div>`;
             }
         
+            /*
             html += `</div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -469,6 +478,8 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>`;
+            */
+            
             document.querySelector("#stop-image").insertAdjacentHTML("beforeend", html);
         }
         

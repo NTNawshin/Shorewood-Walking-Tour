@@ -211,3 +211,8 @@ h1 {
 #toggle-color-mode-stop {
     margin-left: auto; /* Aligns to the right */
 }
+
+.carousel-item img {
+    pointer-events: none;
+    touch-action: pan-y;
+  }
