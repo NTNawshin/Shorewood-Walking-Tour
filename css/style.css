@@ -162,7 +162,7 @@ h1 {
 
 #center, #toggle-dark-mode {
     position: absolute;
-    bottom: 100px; /* Adjust distance from the bottom */
+    bottom: 125px; /* Adjust distance from the bottom */
     right: 20px; /* Adjust distance from the right */
     z-index: 1000; /* Ensure they appear above the map */
     background-color: white; /* Ensure visibility */
@@ -174,7 +174,7 @@ h1 {
 }
 
 #toggle-dark-mode {
-    bottom: 150px; /* Stack above the center button */
+    bottom: 175px; /* Stack above the center button */
 }
 
 /* Darken the carousel arrows */
