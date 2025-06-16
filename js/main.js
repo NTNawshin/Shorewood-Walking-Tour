@@ -1,7 +1,8 @@
 
 (function () {
 
-    let map, route, stops, locationMarker, circle, currentStop = 1, tourLength = 0, active = false, center = false, played = [];
+    let map, route, stops, locationMarker, circle, currentStop = 1, tourLength = 0, center = false, played = [];
+    let audioStartTime = 0;
     //styling variables
     let routeColor = "#2d862d",
         // route2Color = "#ffd300", 
@@ -15,7 +16,7 @@
         inactiveMainStopOutline = "#007F3F"
     //starting position
     let startPosition = [43.0877073, -87.88484659]
-    
+
     let isLargeFont = false;
     let currentAudio = null;
     const homeAudioWidget = document.getElementById("homeAudioWidget");
@@ -35,23 +36,23 @@
             minZoom: 12
         });
 
-        
+
         //add north indicator
         var northArrow = L.Control.extend({
-            options:{
-                position:"topright"
+            options: {
+                position: "topright"
             },
             onAdd: function () {
                 // create the control container with a particular class name
                 var container = L.DomUtil.create('div', 'north-arrow');
-    
+
                 container.innerHTML = '<p style="color: grey;">North &#11014;</p>';
-    
+
                 return container;
             }
         });
 
-        L.control.scale({position:'topright'}).addTo(map);
+        L.control.scale({ position: 'topright' }).addTo(map);
 
         map.addControl(new northArrow());
 
@@ -74,12 +75,12 @@
         // Add event listener for the button
         document.querySelector("#toggle-dark-mode").addEventListener("click", () => {
             let northArrowText = document.querySelector(".north-arrow p"); // Select the <p> inside the north-arrow div
-        
+
             if (currentLayer === lightMode) {
                 map.removeLayer(lightMode);
                 map.addLayer(darkMode);
                 currentLayer = darkMode;
-        
+
                 // Change North Arrow text color to WHITE in dark mode
                 if (northArrowText) {
                     northArrowText.style.color = "#808080";
@@ -88,7 +89,7 @@
                 map.removeLayer(darkMode);
                 map.addLayer(lightMode);
                 currentLayer = lightMode;
-        
+
                 // Change North Arrow text color to BLACK in light mode
                 if (northArrowText) {
                     northArrowText.style.color = "#808080";
@@ -132,9 +133,10 @@
             let stopLatLng = layer.getLatLng();
             let stopRadius = layer.options.radius;
             let distance = map.distance(e.latlng, stopLatLng);
-        
+
             if (distance <= stopRadius && !played.includes(layer.feature.properties.id)) {
                 played.push(layer.feature.properties.id);
+                audioStartTime = 0;
                 openModal(layer.feature.properties);
                 break;
             }
@@ -267,6 +269,19 @@
                         //open modal if layer is not hidden
                         layer.on('click', function () {
                             if (feature.properties.hidden != "true") {
+
+                                // If audio is playing, log the current time
+                                if (currentAudio) {
+                                    console.log(currentAudio.src.split("/").pop())
+                                    console.log(feature.properties.audio)
+                                    if (currentAudio.src.split("/").pop() == feature.properties.audio) {
+                                        audioStartTime = currentAudio.currentTime + 1
+                                    }
+                                    else {
+                                        audioStartTime = 0;
+                                    }
+                                }
+                                console.log("Audio Start Time: " + audioStartTime);
                                 openModal(feature.properties)
                             }
                         })
@@ -386,13 +401,13 @@
     }
 
     //open modal
-    function openModal(props){
+    function openModal(props) {
 
         let existingCarousel = document.getElementById("carouselExampleIndicators");
         if (existingCarousel) {
             existingCarousel.remove();
         }
-        
+
         //set current stop
         currentStop = (Number(props.id) + 1) > tourLength ? Number(props.id) : Number(props.id) + 1;
         updateStopColor();
@@ -417,7 +432,7 @@
 
         // Ensure audio does not autoplay when modal is manually opened
         if (props.audio) {
-            playAudio(props.audio, true); // Pass `false` so audio does not autoplay
+            playAudio(props.audio); // Pass `false` so audio does not autoplay
         }
 
         // Create a wrapper div for centering
@@ -437,7 +452,7 @@
         closeButton.style.backgroundColor = "#2e8f58"; // Button color (green)
 
         // Close modal when clicked
-        closeButton.addEventListener("click", function() {
+        closeButton.addEventListener("click", function () {
             stopModal.hide(); // Close the modal
         });
 
@@ -452,21 +467,23 @@
         if (props.image) {
             let html = `<div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
                 <div class="carousel-indicators">`;
-        
+
             for (let i = 1; i <= props.image; i++) {
                 html += `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${i - 1}" 
                     ${i === 1 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${i}"></button>`;
             }
-        
-            html += `</div><div class="carousel-inner">`;
-        
+
+            html += `</div><div id="carousel-counter" style=" position: absolute; top: 10px; right: 10px; background: rgba(100, 100, 100, 0.6); color: white; padding: 4px 8px; border-radius: 5px; font-size: 14px; z-index: 10;">1 / ${props.image}</div>
+    
+            <div class="carousel-inner">`;
+
             for (let i = 1; i <= props.image; i++) {
                 html += `<div class="carousel-item ${i === 1 ? 'active' : ''}">
                     <img src="assets/id${props.id}/${i}.png" class="d-block w-100" alt="Slide ${i}" 
                     style="max-height: 500px; object-fit: contain; margin: auto;">
                 </div>`;
             }
-        
+
             /*
             html += `</div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -479,16 +496,31 @@
                 </button>
             </div>`;
             */
-            
+
             document.querySelector("#stop-image").insertAdjacentHTML("beforeend", html);
         }
-        
+
         document.getElementById("stop-modal").addEventListener("shown.bs.modal", function () {
-            var myCarousel = new bootstrap.Carousel(document.querySelector("#carouselExampleIndicators"), {
-                interval: false, // Prevents auto-sliding
-                wrap: true // Allows cycling through images
-            });
+            const carouselEl = document.querySelector("#carouselExampleIndicators");
+
+        // Initialize the Bootstrap Carousel
+        const myCarousel = new bootstrap.Carousel(carouselEl, {
+            interval: false,
+            wrap: true
         });
+
+    // Add image number counter logic
+    carouselEl.addEventListener('slid.bs.carousel', function (e) {
+        const items = carouselEl.querySelectorAll('.carousel-item');
+        const totalSlides = items.length;
+        const activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
+        const counterEl = document.getElementById("carousel-counter");
+
+        if (counterEl) {
+            counterEl.textContent = `${activeIndex + 1} / ${totalSlides}`;
+        }
+    });
+});
 
         let para = document.createElement("p");
         para.textContent = "";
@@ -507,13 +539,13 @@
         //fontControl.style.backgroundColor = "#808080"; // Button color (grey)
 
         // Close modal when clicked
-        fontControl.addEventListener("click", function() {
+        fontControl.addEventListener("click", function () {
             toggleFontSize();
         });
 
         fontncolorbuttonWrapper.appendChild(fontControl);
         //document.querySelector("#stop-body").appendChild(fontControl);
-        
+
 
         // Create "Color Mode" button
         let colorControl = document.createElement("button");
@@ -524,7 +556,7 @@
         //colorControl.style.backgroundColor = "#808080";
 
         // Add event listener
-        colorControl.addEventListener("click", function() {
+        colorControl.addEventListener("click", function () {
             toggleColorMode();
         });
 
@@ -535,102 +567,58 @@
         document.querySelector("#stop-body").appendChild(fontncolorbuttonWrapper);
 
 
-        if (props.text){
+        if (props.text) {
             let p = "<p id='stop-text'>" + props.text + "</p>";
-            document.querySelector("#stop-body").insertAdjacentHTML("beforeend",p)
+            document.querySelector("#stop-body").insertAdjacentHTML("beforeend", p)
         }
         //add listeners for closing modal if previous button or x is pressed
-        document.querySelectorAll(".close").forEach(function(elem){
-            elem.addEventListener("click", function(){
-                if (elem.id == "prev"){
+        document.querySelectorAll(".close").forEach(function (elem) {
+            elem.addEventListener("click", function () {
+                if (elem.id == "prev") {
                     currentStop = props.id - 1 < 1 ? props.id : 1;
                 }
-                if (elem.id == "x"){
+                if (elem.id == "x") {
                     currentStop = props.id;
                 }
                 updateStopColor();
             })
         })
-        
+
         stopModal.show();
     }
 
-    function playAudio(audioFile = null, shouldAutoplay = false) {
-        active = true;
-    
-        // Stop any currently playing audio (including homeAudioWidget)
-        if (currentAudio) {
-            currentAudio.pause();
-            currentAudio.currentTime = 0;
-            currentAudio = null;
-        }
-    
+    function playAudio(audioFile = null) {
+
         let audio;
-    
+
         if (audioFile) {
             // Stop the home audio widget if it's playing
             if (!homeAudioWidget.paused) {
                 homeAudioWidget.pause();
                 homeAudioWidget.currentTime = 0; // Reset to the beginning
             }
-        
+
             // Create a wrapper div for centering
             let audioWrapper = document.createElement("div");
             audioWrapper.className = "audio-modal-container text-center"; // Add class for styling
-        
+
             // Create a new audio element for modal audio
             audio = document.createElement("audio");
             audio.controls = true;
             audio.src = 'audio/' + audioFile;
-            audio.autoplay = shouldAutoplay;
-        
+
             // Append the audio to the wrapper
             audioWrapper.appendChild(audio);
-        
+
             // Insert the wrapper below the title in the stop modals
             document.querySelector("#title-container").appendChild(audioWrapper);
-        
-            currentAudio = audio;
-        } else {
-            // Toggle play/pause for the home audio widget
-            audio = homeAudioWidget;
-    
-            // Stop any other audio before playing home audio
-            if (currentAudio && currentAudio !== homeAudioWidget) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-            }
-    
-            if (audio.paused) {
-                audio.play();
-            } else {
-                audio.pause();
-            }
-    
+
             currentAudio = audio;
         }
-    
-        // Stop audio when it finishes
-        audio.onended = function () {
-            stopAudio(audio);
-            stopModal.hide();
-        };
-    
-        // Stop audio when the modal is closed
-        document.querySelectorAll(".close").forEach(function (elem) {
-            elem.addEventListener("click", () => stopAudio(audio));
-        });
-    
-        function stopAudio(audioElement) {
-            audioElement.pause();
-            audioElement.currentTime = 0;
-            active = false;
-    
-            // Clear current audio reference
-            if (currentAudio === audioElement) {
-                currentAudio = null;
-            }
-        }
+
+        audio.currentTime = audioStartTime;
+        audio.play();
+
     }
 
     function toggleColorMode() {
@@ -681,13 +669,45 @@
         const startContainer = document.getElementById("start-container");
         const mapContainer = document.getElementById("map-container");
 
+        // startTourButtons.forEach(button => {
+        //     button.addEventListener("click", function () {
+        //         startContainer.style.display = "none";
+        //         mapContainer.style.display = "block";
+        //         createMap();
+        //     });
+        // });
+
         startTourButtons.forEach(button => {
-            button.addEventListener("click", function () {
+            button.addEventListener("click", async function () {
+                const loadingMsg = document.createElement("p");
+                loadingMsg.textContent = "Preparing tour: Caching audio files for offline use...";
+                loadingMsg.style.textAlign = "center";
+                loadingMsg.style.color = "#2e8f58";
+                startContainer.appendChild(loadingMsg);
+
+                // Register the service worker
+                if ('serviceWorker' in navigator) {
+                    try {
+                        await navigator.serviceWorker.register('/service-worker.js');
+                        console.log('Service Worker registered');
+
+                        // Wait 2 seconds as a buffer (optional)
+                        await new Promise((resolve) => setTimeout(resolve, 2000));
+
+                        loadingMsg.textContent = "Tour is ready! Starting...";
+                    } catch (error) {
+                        console.error("Service Worker registration failed:", error);
+                        loadingMsg.textContent = "Error preparing offline audio. Starting tour anyway.";
+                    }
+                }
+
+                // Proceed with tour
                 startContainer.style.display = "none";
                 mapContainer.style.display = "block";
                 createMap();
             });
         });
+
     });
 
     document.addEventListener("DOMContentLoaded", function () {
@@ -699,19 +719,19 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         const carousel = document.querySelector("#carouselExampleIndicators");
-    
+
         if (carousel) {
             let touchStartX = 0;
             let touchEndX = 0;
-    
+
             carousel.addEventListener("touchstart", function (event) {
                 touchStartX = event.touches[0].clientX;
             });
-    
+
             carousel.addEventListener("touchmove", function (event) {
                 touchEndX = event.touches[0].clientX;
             });
-    
+
             carousel.addEventListener("touchend", function () {
                 if (touchStartX - touchEndX > 50) {
                     // Swipe left (Next slide)
@@ -732,12 +752,12 @@
         if (toggleFontSizeButton) {
             toggleFontSizeButton.addEventListener("click", toggleFontSize);
         }
-    
+
         // Attach event listener for static button
         if (toggleColorModeButton) {
             toggleColorModeButton.addEventListener("click", toggleColorMode);
         }
     });
-    
+
 
 })();

@@ -53,7 +53,7 @@
 
             <!--Quick Audio Guide-->
             <p></p>
-            <h4 class="centered-italic"><br>Hit Play to Start the Audio</h4>
+            <h4 class="centered-italic"><br>Hit the <b>Play</b> button to start audio</h4>
             <p></p>
 
             <!--Audio Widget-->
@@ -62,13 +62,6 @@
                     <source src="audio/00_StartingPoint.mp3" type="audio/mpeg">
                 </audio>
             </div>
-
-            <!--Start Tour Button-->
-            <br>
-            <div class="text-center">
-                <button id="start-tour-btn" type="button" class="btn btn-secondary">Start Tour</button>
-            </div>
-            <br>
             
             <!--Image Carousel-->
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
@@ -80,6 +73,38 @@
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                         aria-label="Slide 3"></button>
                 </div>
+                <br>
+                <div id="image-counter" style="
+                    position: absolute;
+                    right: 20px;
+                    background: rgba(100, 100, 100, 0.6);
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    z-index: 10;
+                    ">1 / 4
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                    const carousel = document.getElementById("carouselExampleIndicators");
+                    const counter = document.getElementById("image-counter");
+
+                    if (!carousel || !counter) return;
+
+                    const items = carousel.querySelectorAll(".carousel-item");
+                    const totalSlides = items.length;
+
+                    // Initialize correct value
+                    counter.textContent = `1 / ${totalSlides}`;
+
+                    // Add listener to update on slide change
+                    carousel.addEventListener("slid.bs.carousel", function () {
+                        const activeIndex = Array.from(items).findIndex(item => item.classList.contains("active"));
+                        counter.textContent = `${activeIndex + 1} / ${totalSlides}`;
+                    });
+                });
+</script>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="assets/home/1.png" class="d-block w-100" alt="..." style="max-height: 500px; object-fit: contain; margin: auto;">
@@ -102,6 +127,12 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+
+            <!--Start Tour Button-->
+            <br>
+            <div class="text-center">
+                <button id="start-tour-btn" type="button" class="btn btn-secondary">Start Tour</button>
+            </div>
             
             <div id="button-container"><br>
             <button id="toggle-font-size" class="btn btn-primary" d-inline-block>Change Font Size</button>
@@ -109,86 +140,66 @@
             </div>
             <!--Description-->
             <p>
-                Hello, and welcome to the walking tour of Green Stormwater Infrastructure in the Village of
-                Shorewood in Milwaukee County. You should be standing in the Shorewood Public Library atrium. Refer to
-                Image #1 and #2 of the Starting Point image carousel to confirm you are in the correct location.
+                Hello, and welcome to our <b>Green Stormwater Infrastructure Walking Tour</b> in the Village of Shorewood in Milwaukee County.
+                You should be standing in the <b>Shorewood Public Library atrium</b>. Refer to Image #1 and #2 of the Starting Point image carousel 
+                to confirm you are in the correct location. You can <b>swipe through the images on your screen</b> to view them.
             </p>
             <p>
-                The Village of Shorewood is situated between the Milwaukee River on the west and Lake Michigan on the
-                east, with the Shorewood Public Library sitting at the midpoint between these watery boundaries. Thus,
-                the Shorewood Public Library serves as a vibrant community hub, offering resources for learning,
-                connection, and exploration. The library is a cornerstone of the Shorewood community, and therefore is a
-                perfect place to start our tour of local Green Stormwater Infrastructure!
+                The Village of Shorewood is located between the Milwaukee River on the west and Lake Michigan on the east, with the Library 
+                sitting at the midpoint between these watery boundaries. Thus, the Shorewood Public Library serves as a vibrant community hub, 
+                offering resources for learning, connection, and exploration, and therefore is a perfect place to start our tour.
             </p>
             <p>
-                Now, let’s dive into the purpose of our tour today. Shorewood’s location between the Milwaukee River and
-                Lake Michigan holds many commercial, recreational, and aesthetic advantages, but also presents a risk:
-                <b>flooding</b> from increasingly frequent and severe storms due to changing climates. Many cities and
-                towns have implemented large underground storm sewer systems and other massive utility projects to move
-                <b>stormwater</b>, or rain from heavy storms that produces flooding. Such large construction projects
-                are described as <b>Gray Stormwater Infrastructure</b> due to their reliance on concrete and other
-                unnatural building materials.
+                Now, let’s dive into the purpose of our tour today. Shorewood’s unique location offers many commercial, recreational, and 
+                aesthetic advantages, but also presents a risk: <b>flooding</b> from increasingly frequent and severe storms due to changing climates. 
+                To manage stormwater, many cities have built large underground sewers and utility systems, known as <b>Gray Stormwater Infrastructure</b>, 
+                which rely on concrete and other unnatural materials to move water away quickly.
             </p>
             <p>
-                In contrast, the stops on this tour highlight the innovative <b>“green”</b>, or environmentally-friendly,
-                practices that Shorewood has implemented to manage stormwater and protect it from flooding, but also
-                that hold co-benefits to the local community and environment. This collection of practices, known as
-                <b>Green Stormwater Infrastructure</b>, utilize natural solutions to capture and regulate stormwater
-                right where it falls, alleviating reliance on Gray Stormwater Infrastructure. By doing so, Green
-                Stormwater Infrastructure plays a crucial role in contributing to a more resilient and sustainable
-                Shorewood community.
+                In contrast, the stops on this tour highlight the innovative <b>“green”</b>, or environmentally-friendly, practices that Shorewood has implemented. 
+                This collection of practices, known as <b>Green Stormwater Infrastructure</b>, utilizes natural solutions to capture and regulate stormwater right 
+                where it falls, alleviating reliance on Gray Stormwater Infrastructure. By doing so, Green Stormwater Infrastructure plays a crucial role in 
+                contributing to a more resilient and sustainable Shorewood community.
+            </p>
+            <br><b>Navigating the app</b>
+            <p><br>Today, you will be using an interactive map to follow a green route that will navigate you to 10 stops along the tour. Before starting the tour, make sure that
+            <ul>•	Your GPS is enabled on both your phone and browser</ul>
+            <ul>•	Your browser screen <b>MUST</b> be open throughout the tour to enable automatic audio playback – do not lock your screen or switch apps</ul>
+            <ul>•	Your phone is fully charged or you have an external battery pack</ul>
+            <ul>•	You are dressed for the season and wearing appropriate footwear!</ul>
+            <ul>•	And for the best experience, use headphones!</ul>
+            </n><b>Most importantly, always watch your step while walking, especially when crossing streets!</b>
             </p>
             <p>
-                Today, you will be using an interactive map to follow a <b>green route</b> that will navigate you to
-                <b>10 stops</b> along the tour. Let’s talk a bit about how the interactive map works. If you have your
-                GPS location enabled in your mobile browser, you should see a <b>blue circle</b> on the map. That’s you!
-                You can refer to your current location on the map whenever you are unsure if you are still on the tour
-                route. There also is a static map providing an overview of the entire tour under the “Menu” tab.
+                Now, let’s walk through how the interactive map works. Image #3 shows a static image of the map. You can also find the map and app instructions under the 
+                <b>“Menu”</b> tab throughout the tour. If you already feel confident to navigate on your own, you can skip the following explanation and press <b>“Start Tour”</b>, 
+                but please make sure you understand how the map and audio features work before heading out. 
+            <p>Once you click the <b>“Start Tour”</b> button, the interactive map will appear on your screen. If <b>GPS is enabled on both your device and browser</b>, 
+                you’ll see a <b>blue circle</b> on the map. That’s you! You can refer to your current location on the map to follow the green route. <b>Pinch to zoom out</b> 
+                if you'd like an overview of the entire route. The <b>center button</b> re-centers the map to your current location and the button below it turns on <b>dark mode</b>.
             </p>
-            <p>
-                As you follow the green route on the map, information will appear on your phone for each stop. The
-                <b>green circles</b> represent tour stops at different practices of Green Stormwater Infrastructure, and
-                provide a chance to take a short break from walking during the tour. The green stops contain an <b>audio
-                    narration</b> of the Green Stormwater Infrastructure practice at the stop and an <b>image
-                    carousel</b> with several photos, diagrams, or maps to provide additional context about the stop.
-                You should always stop walking when viewing an image for safety! Use the first image in the carousel at
-                each stop to confirm that you are correctly looking at the Green Stormwater Infrastructure practice, as
-                sometimes they blend into the local environment…intentionally so to add to the aesthetic beauty of the
-                local community!
+            <p><b>Follow the numbered green circles on the route to move in the suggested tour direction</b>. These circles represent the 10 main stops, each featuring a different 
+                Green Stormwater Infrastructure practice. At each stop, you'll find an audio narration and an image carousel with photos, diagrams, or maps to help you identify and 
+                understand the practice. You can also read the text version of the narration on your screen. Use the buttons below the image carousel to <b>adjust Font Size and 
+                    switch Color Mode for better readability</b>.
             </p>
-            <p>
-                The <b>white circles</b> give you additional audio context about Green Stormwater Infrastructure as you
-                walk between stops, and thus you can continue to walk during the white circle audio playback if you feel
-                comfortable doing so. When you enter a circle, green or white, the audio will play automatically,
-                describing the stop and providing directions along the route. Please listen to the full audio clip
-                before you enter the next circle, and replay sections of the audio to relate the narration to the images
-                if needed. If you prefer to read instead of listen to the audio, you can stop the audio and read the
-                text information on your screen when you reach each circle.
-            </p>
-            <p>
-                The tour should take approximately 2 hours to complete. The route mostly follows paved sidewalks but
-                includes a stairwell and a dirt path along the Milwaukee River. So, I hope you are dressed for the
-                season and wearing appropriate footwear! For those who wish to avoid stairs, an alternate accessible
-                route is available near the Oakleaf Trail Bridge on Capitol Drive. This accessible path is mostly paved
-                but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The
-                accessible route is marked with a <b>dashed green line</b> on the map, and I will alert you when you
-                reach the fork so that you can follow your preferred pathway.
-            </p>
-            <p>
-                Before starting the tour, please check your device settings to ensure that GPS location services are
-                enabled on both your mobile device and your web browser individually. Please note that <b>you MUST keep
-                    your browser screen open throughout the tour to enable automatic audio playback.</b> Therefore, try
-                to minimize using other apps on your phone during the tour. Make sure your phone is fully charged or
-                bring along an external battery pack for uninterrupted access to the tour. For the best experience, use
-                headphones to listen to the audio. Most importantly, always watch your step while walking, especially
-                when crossing streets!
-            </p>
-            <p>
-                Now, click the <b>“Start Tour”</b> button and walk towards the first green circle on the map. If you are
-                facing the library entrance from the atrium, use the door on your left to exit the building. Begin the
-                tour by exploring our first Green Stormwater Infrastructure feature at the northeast corner of the
-                library.
-            </p>
+            <p>For each green circle, please <b>stop walking and listen to the full audio</b> before continuing to the next stop. And <b>always stop walking when viewing text or 
+                images for your safety! </b></p>
+            <p>The <b>white circles</b> provide additional context as you walk between green stops and thus you can continue to walk while listening to the white circle audio 
+                or even skip them if you prefer. </p>
+            <p>When you enter any circle on the map, green or white, <b>the audio will play automatically,</b> and the images and text will open up on your screen. It may 
+                take a few seconds to load depending on GPS accuracy and internet speed. <b>To avoid delays, we recommend downloading the audio in advance</b>. You can also use 
+                    the <b>audio controls</b> at the top of your screen to pause, rewind, or change playback speed. You can always use the <b>“Back to Map”</b> button to return 
+                    to the map view for navigation. You can tap any green or white circle on the map to manually open that stop’s information and replay its audio anytime. 
+            <p>If you want to return to this screen, tap <b>“Green Shorewood”</b> at the top or select the <b>first white circle</b> on the map.
+            <p>The tour should take <b>approximately 2 hours</b> to complete. The route mostly follows paved sidewalks but includes a stairwell and a dirt path along the Milwaukee 
+                River. For those who wish to avoid stairs, <b>an alternate accessible route is available</b> near the Oakleaf Trail Bridge on Capitol Drive. This accessible path 
+                is mostly paved but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The accessible route is marked with a <b>dashed green line</b> 
+                on the map, and I will alert you when you reach the fork so that you can follow your preferred pathway.</p>
+            <p>Now, click the <b>“Start Tour”</b> button and walk towards the first green circle on the map. If you are facing the library entrance from the atrium, use the door on 
+                your left to exit the building. Begin the tour by exploring our first Green Stormwater Infrastructure feature at the northeast corner of the library.</p>
+            
+
 
             <!--Start Tour Button-->
             <p></p>
