@@ -272,9 +272,9 @@
                                 console.log(currentAudio)
                                 // If audio is playing, log the current time
                                 if (currentAudio) {
-                                    console.log(currentAudio.src.split("/").pop())
+                                    console.log(currentAudio.querySelector('source').getAttribute('src').split('/').pop())
                                     console.log(feature.properties.audio)
-                                    if (currentAudio.src.split("/").pop() == feature.properties.audio) {
+                                    if (currentAudio.querySelector('source').getAttribute('src').split('/').pop() == feature.properties.audio) {
                                         audioStartTime = currentAudio.currentTime + 1
                                     }
                                     else {
