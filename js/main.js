@@ -46,7 +46,7 @@
                 // create the control container with a particular class name
                 var container = L.DomUtil.create('div', 'north-arrow');
 
-                container.innerHTML = '<p style="color: grey; font-size: 20px; font-family: Lato, sans-serif; padding: 0.5em; ">N<span style="font-size: 32px;">&#11014;</span></p>';
+                container.innerHTML = '<p style="color: grey; font-size: 20px; font-family: Lato, sans-serif; padding-right: 0.75em; ">N<span style="font-size: 32px;">&#11014;</span></p>';
                 return container;
             }
         });
