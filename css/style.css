@@ -159,6 +159,8 @@ h1 {
 
 #map-container {
     position: relative;
+    height: 100vh; /* NEW: ensures no scrolling needed */
+    overflow: hidden; /* prevent accidental scroll */
 }
 
 #Map-title {
@@ -169,7 +171,7 @@ h1 {
 #center, #toggle-dark-mode {
     position: absolute;
     bottom: 125px; /* Adjust distance from the bottom */
-    right: 20px; /* Adjust distance from the right */
+    right: 1em;
     z-index: 1000; /* Ensure they appear above the map */
     background-color: white; /* Ensure visibility */
     border: 2px solid black;
@@ -180,7 +182,11 @@ h1 {
 }
 
 #toggle-dark-mode {
-    bottom: 175px; /* Stack above the center button */
+    bottom: 8em; /* Stack above the center button */
+}
+
+#center {
+    bottom: 12em;
 }
 
 /* Darken the carousel arrows */
@@ -226,17 +232,16 @@ h1 {
 .custom-audio-container {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    padding-left: 8px;
+    gap: 6px;
+    padding: 4px 4px;
     flex-wrap: nowrap;
+    margin-right: 12px;
     background-color: rgb(238, 238, 238);
 }
 
 .progress-bar {
     flex-grow: 1;
-    min-width: 120px;
+    max-width: 120px;
     background-color: rgb(255, 255, 255);
     accent-color: #2e8f58;
 }
@@ -244,6 +249,7 @@ h1 {
 .time-display {
     font-size: 16px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: nowrap;
 }
 
 .icon-btn,
@@ -254,6 +260,7 @@ h1 {
 
 .speed-control {
   margin-right: 12px;
+  max-width: 60px;
 }
 
 .icon-btn {
