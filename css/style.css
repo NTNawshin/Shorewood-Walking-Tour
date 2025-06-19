@@ -2,6 +2,12 @@
     background-color: rgb(183, 212, 183);
 }
 
+@media (max-width: 768px) {
+    .navbar {
+        min-height: 100px;
+    }
+}
+
 h1, h2, h3 {
     font-family: 'Merriweather', serif !important;
 }
@@ -95,7 +101,7 @@ h1 {
 
 #start-tour-btn{
     font-size: 22px;
-    background-color: #2e8f58 
+    background-color: #2e8f58;
 }
 
 #start-container {
@@ -216,3 +222,49 @@ h1 {
     pointer-events: none;
     touch-action: pan-y;
   }
+
+.custom-audio-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 8px;
+    flex-wrap: nowrap;
+    background-color: rgb(238, 238, 238);
+}
+
+.progress-bar {
+    flex-grow: 1;
+    min-width: 120px;
+    background-color: rgb(255, 255, 255);
+    accent-color: #2e8f58;
+}
+
+.time-display {
+    font-size: 16px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.icon-btn,
+.speed-control {
+  font-size: 16px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.speed-control {
+  margin-right: 12px;
+}
+
+.icon-btn {
+  font-size: 22px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 6px;
+  color: #2e8f58;
+}
+
+.icon-btn:focus {
+  outline: none;
+}

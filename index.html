@@ -48,20 +48,153 @@
         <div id="start-container">
             <!--Header-->
             <div class="text-center">
-                <h1><b>Welcome to our Green Shorewood Walking Tour!</b></h1>
+                <h1><b>Welcome to our walking tour!</b></h1>
             </div>
 
             <!--Quick Audio Guide-->
             <p></p>
-            <h4 class="centered-italic"><br>Hit the <b>Play</b> button to start audio</h4>
+            <h4 class="centered-italic"><br>Hit the <b>Play ▶</b> button to start audio</h4>
             <p></p>
 
             <!--Audio Widget-->
-            <div class="audiohome">
+            <!--<div class="audiohome">
                 <audio id="homeAudioWidget" controls>
                     <source src="audio/00_StartingPoint.mp3" type="audio/mpeg">
                 </audio>
+            </div>-->
+            
+            <!-- Custom Audio Player UI -->
+            <div id="custom-audio-container">
+                <button id="togglePlayBtn" class="icon-btn">▶</button>
+
+                <input type="range" id="progressBar" value="0" min="0" step="0.1">
+                <span id="timeDisplay">0:00/0:00 </span>
+
+                <!-- Optional Speed Control -->
+                <select id="speedControl">
+                    <option value="0.75">0.75x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
             </div>
+
+            <audio id="homeAudioWidget">
+            <source src="audio/00_StartingPoint.mp3" type="audio/mpeg">
+            </audio>
+
+            <style>
+            #custom-audio-container {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding-top: 4px;
+                padding-bottom: 4px;
+                padding-left: 8px;
+                flex-wrap: nowrap;
+                background-color: rgb(238, 238, 238);
+            }
+
+            #progressBar {
+                flex-grow: 1;
+                min-width: 120px;
+                background-color: rgb(255, 255, 255);
+                accent-color: #2e8f58;
+            }
+
+            #timeDisplay {
+                font-size: 16px;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            button, select {
+                font-size: 16px;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: rgb(255, 255, 255);
+                padding: 2px 0px;
+                margin-right: 12px; /* Adds space to the right of the dropdown */
+            }
+
+            select#speedControl {
+            font-size: 16px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .icon-btn {
+                font-size: 40px;
+                border: none;
+                background: none;
+                cursor: pointer;
+                padding: 2px 8px;
+                color: #2e8f58;
+            }
+
+            .icon-btn:focus {
+                outline: none;
+            }
+
+            </style>
+
+            <script>
+            const audio = document.getElementById('homeAudioWidget');
+            const togglePlayBtn = document.getElementById('togglePlayBtn');
+            const progressBar = document.getElementById('progressBar');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const speedControl = document.getElementById('speedControl');
+
+            let isPlaying = false;
+
+            togglePlayBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                audio.play();
+                } else {
+                audio.pause();
+                }
+            });
+
+            audio.addEventListener('play', () => {
+                togglePlayBtn.textContent = '⏸';
+                isPlaying = true;
+            });
+
+            audio.addEventListener('pause', () => {
+                togglePlayBtn.textContent = '▶';
+                isPlaying = false;
+            });
+
+            audio.addEventListener('loadedmetadata', () => {
+                progressBar.max = audio.duration;
+                updateTimeDisplay();
+            });
+
+            audio.addEventListener('timeupdate', () => {
+                progressBar.value = audio.currentTime;
+                updateTimeDisplay();
+            });
+
+            progressBar.addEventListener('input', () => {
+                audio.currentTime = progressBar.value;
+                updateTimeDisplay();
+            });
+
+            speedControl.addEventListener('change', () => {
+                audio.playbackRate = parseFloat(speedControl.value);
+            });
+
+            function updateTimeDisplay() {
+                const current = formatTime(audio.currentTime);
+                const duration = formatTime(audio.duration);
+                timeDisplay.textContent = `${current} / ${duration}`;
+            }
+
+            function formatTime(sec) {
+                const minutes = Math.floor(sec / 60);
+                const seconds = Math.floor(sec % 60).toString().padStart(2, '0');
+                return `${minutes}:${seconds}`;
+            };
+
+            </script>
             
             <!--Image Carousel-->
             <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
@@ -104,7 +237,7 @@
                         counter.textContent = `${activeIndex + 1} / ${totalSlides}`;
                     });
                 });
-</script>
+                </script>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
                         <img src="assets/home/1.png" class="d-block w-100" alt="..." style="max-height: 500px; object-fit: contain; margin: auto;">
@@ -131,7 +264,7 @@
             <!--Start Tour Button-->
             <br>
             <div class="text-center">
-                <button id="start-tour-btn" type="button" class="btn btn-secondary">Start Tour</button>
+                <button id="start-tour-btn" type="button" class="btn btn-secondary"><b>Start Tour</b></button>
             </div>
             
             <div id="button-container"><br>
@@ -204,7 +337,7 @@
             <!--Start Tour Button-->
             <p></p>
             <div class="text-center">
-                <button id="start-tour-btn" type="button" class="btn btn-secondary">Start Tour</button><br><br><br>
+                <button id="start-tour-btn" type="button" class="btn btn-secondary"><b>Start Tour</b></button><br><br><br>
             </div>
             <p></p>
             

@@ -602,22 +602,93 @@
             let audioWrapper = document.createElement("div");
             audioWrapper.className = "audio-modal-container text-center"; // Add class for styling
 
-            // Create a new audio element for modal audio
+            //Create a new audio element for modal audio
             audio = document.createElement("audio");
             audio.controls = true;
             audio.src = 'audio/' + audioFile;
 
             // Append the audio to the wrapper
-            audioWrapper.appendChild(audio);
+            audioWrapper.appendChild(audio); 
 
-            // Insert the wrapper below the title in the stop modals
+            // Custom Audio Player Container
+            audioWrapper.innerHTML = `
+            <div class="custom-audio-container">
+                <button class="icon-btn play-toggle">▶</button>
+                <input type="range" class="progress-bar" value="0" min="0" step="0.1">
+                <span class="time-display">0:00 / 0:00</span>
+                <select class="speed-control">
+                <option value="0.75">0.75x</option>
+                <option value="1" selected>1x</option>
+                <option value="1.25">1.25x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+                </select>
+            </div>
+            <audio class="custom-audio-widget">
+                <source src="audio/${audioFile}" type="audio/mpeg">
+            </audio>
+            `;
+
             document.querySelector("#title-container").appendChild(audioWrapper);
 
-            currentAudio = audio;
-        }
+            // Add interactivity for the custom player
+            const audioElem = audioWrapper.querySelector(".custom-audio-widget");
+            const playBtn = audioWrapper.querySelector(".play-toggle");
+            const progress = audioWrapper.querySelector(".progress-bar");
+            const time = audioWrapper.querySelector(".time-display");
+            const speed = audioWrapper.querySelector(".speed-control");
 
-        audio.currentTime = audioStartTime;
-        audio.play();
+            playBtn.addEventListener("click", () => {
+            if (audioElem.paused) {
+                audioElem.play();
+            } else {
+                audioElem.pause();
+            }
+            });
+
+            audioElem.addEventListener("play", () => {
+            playBtn.textContent = "⏸";
+            });
+
+            audioElem.addEventListener("pause", () => {
+            playBtn.textContent = "▶";
+            });
+
+            audioElem.addEventListener("loadedmetadata", () => {
+            progress.max = audioElem.duration;
+            updateTime();
+            });
+
+            audioElem.addEventListener("timeupdate", () => {
+            progress.value = audioElem.currentTime;
+            updateTime();
+            });
+
+            progress.addEventListener("input", () => {
+            audioElem.currentTime = progress.value;
+            updateTime();
+            });
+
+            speed.addEventListener("change", () => {
+            audioElem.playbackRate = parseFloat(speed.value);
+            });
+
+            function updateTime() {
+            const curr = format(audioElem.currentTime);
+            const dur = format(audioElem.duration);
+            time.textContent = `${curr} / ${dur}`;
+            }
+
+            function format(sec) {
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60).toString().padStart(2, "0");
+            return `${m}:${s}`;
+            }
+
+            currentAudio = audioElem;
+            audioElem.currentTime = audioStartTime;
+            audioElem.play();
+        }
 
     }
 
