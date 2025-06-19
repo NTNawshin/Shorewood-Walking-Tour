@@ -31,8 +31,8 @@
     function createMap() {
         map = L.map("map", {
             center: startPosition,
-            zoom: 17,
-            maxZoom: 18,
+            zoom: 18,
+            maxZoom: 22,
             minZoom: 12
         });
 
@@ -46,8 +46,7 @@
                 // create the control container with a particular class name
                 var container = L.DomUtil.create('div', 'north-arrow');
 
-                container.innerHTML = '<p style="color: grey;">North &#11014;</p>';
-
+                container.innerHTML = '<p style="color: grey; font-size: 18px; font-family: Lato, sans-serif;">North <span style="font-size: 28px;">&#11014;</span></p>';
                 return container;
             }
         });
@@ -776,6 +775,7 @@
                 startContainer.style.display = "none";
                 mapContainer.style.display = "block";
                 createMap();
+                window.scrollTo(0, 0);
             });
         });
 

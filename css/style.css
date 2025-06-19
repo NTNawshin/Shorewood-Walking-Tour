@@ -118,7 +118,9 @@ h1 {
 }
 
 #map{
-    height:92vh;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
 }
 
 /*modal styling*/
@@ -170,7 +172,6 @@ h1 {
 
 #center, #toggle-dark-mode {
     position: absolute;
-    bottom: 125px; /* Adjust distance from the bottom */
     right: 1em;
     z-index: 1000; /* Ensure they appear above the map */
     background-color: white; /* Ensure visibility */
@@ -187,6 +188,13 @@ h1 {
 
 #center {
     bottom: 12em;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100%;
 }
 
 /* Darken the carousel arrows */
