@@ -46,7 +46,7 @@
                 // create the control container with a particular class name
                 var container = L.DomUtil.create('div', 'north-arrow');
 
-                container.innerHTML = '<p style="color: grey; font-size: 18px; font-family: Lato, sans-serif;">North <span style="font-size: 28px;">&#11014;</span></p>';
+                container.innerHTML = '<p style="color: grey; font-size: 20px; font-family: Lato, sans-serif; padding: 0.5em; ">N<span style="font-size: 32px;">&#11014;</span></p>';
                 return container;
             }
         });
@@ -135,6 +135,11 @@
 
             if (distance <= stopRadius && !played.includes(layer.feature.properties.id)) {
                 played.push(layer.feature.properties.id);
+                // ✅ Stop any currently playing audio
+                if (currentAudio && !currentAudio.paused) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
+                }
                 audioStartTime = 0;
                 openModal(layer.feature.properties);
                 break;
@@ -531,7 +536,7 @@
 
         // Create "Font Control" button
         let fontControl = document.createElement("button");
-        fontControl.textContent = "Change Font Size";
+        fontControl.textContent = "Font Size";
         fontControl.id = "toggle-font-size-stop"
         fontControl.className = "btn btn-secondary";
         //fontControl.style.fontSize = "20px";

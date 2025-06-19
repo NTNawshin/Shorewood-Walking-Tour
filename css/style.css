@@ -31,17 +31,13 @@ h4 {
 .leaflet-control-scale {
     font-family: 'Lato', sans-serif;
     font-size: 16px !important; /* Adjust size as needed */
+    right: 0.5em;
 }
 
 .leaflet-control-scale-line {
     background: rgba(255, 255, 255, 0.0) !important; /* Background color */
     border: 2px solid black; /* Border color */
     color: #808080 !important; /* Text color */
-}
-
-.north-arrow p {
-    font-family: 'Lato', sans-serif;
-    font-size: 18px; /* Adjust size as needed */
 }
 
 .modal-title {
@@ -172,7 +168,7 @@ h1 {
 
 #center, #toggle-dark-mode {
     position:fixed;
-    right: 1em;
+    right: 0.75em;
     z-index: 1000; /* Ensure they appear above the map */
     background-color: white; /* Ensure visibility */
     border: 2px solid rgb(97, 96, 96);
@@ -183,17 +179,16 @@ h1 {
 }
 
 #toggle-dark-mode {
-    bottom: 6em; /* Stack above the center button */
+    bottom: 4.5em; /* Stack above the center button */
 }
 
 #center {
-    bottom: 10em;
+    bottom: 8em;
 }
 
 html, body {
     margin: 0;
     padding: 0;
-    overflow: hidden;
     height: 100%;
 }
 
