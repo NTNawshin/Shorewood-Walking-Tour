@@ -148,7 +148,7 @@
     }
 
     function addRoute() {
-        fetch("data/Route_new.geojson")
+        fetch("data/Route_new3.geojson")
             .then(res => res.json())
             .then(data => {
                 route = L.geoJson(data, {

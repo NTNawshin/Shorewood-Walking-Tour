@@ -171,23 +171,23 @@ h1 {
 }
 
 #center, #toggle-dark-mode {
-    position: absolute;
+    position:fixed;
     right: 1em;
     z-index: 1000; /* Ensure they appear above the map */
     background-color: white; /* Ensure visibility */
-    border: 2px solid black;
+    border: 2px solid rgb(97, 96, 96);
     padding: 8px;
     border-radius: 5px;
     cursor: pointer;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* Optional: adds a slight shadow */
+    box-shadow: 2px 2px 5px rgba(31, 31, 31, 0.2); /* Optional: adds a slight shadow */
 }
 
 #toggle-dark-mode {
-    bottom: 8em; /* Stack above the center button */
+    bottom: 6em; /* Stack above the center button */
 }
 
 #center {
-    bottom: 12em;
+    bottom: 10em;
 }
 
 html, body {
