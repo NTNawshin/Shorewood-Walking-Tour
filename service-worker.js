@@ -2,6 +2,11 @@
 const CACHE_NAME = 'audio-cache-v1';
 const AUDIO_FILES = [
   '/audio/A_RainBarrels.mp3',
+  '/audio/10.5_EndTour.mp3',
+  '/audio/10.4_FunTask.mp3',
+  '/audio/10.3_EndofTour.mp3',
+  '/audio/10.2_Walk_DownspoutsAndSS.mp3',
+  '/audio/10.1_Walk_PermeableDriveway.mp3',
   '/audio/10.0_PermeablePavement.mp3',
   '/audio/09.1_Walk.mp33',
   '/audio/09.0_StreamGauge.mp3',

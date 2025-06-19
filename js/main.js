@@ -269,7 +269,7 @@
                         //open modal if layer is not hidden
                         layer.on('click', function () {
                             if (feature.properties.hidden != "true") {
-
+                                console.log(currentAudio)
                                 // If audio is playing, log the current time
                                 if (currentAudio) {
                                     console.log(currentAudio.src.split("/").pop())
