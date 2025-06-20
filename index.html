@@ -89,15 +89,15 @@
                 display: flex;
                 align-items: center;
                 gap: 6px;
-                padding-top: 4px 4px;
+                padding: 4px 4px;
                 flex-wrap: nowrap;
-                margin: auto 6px;
+                margin: auto 12px;
                 background-color: rgb(238, 238, 238);
             }
 
             #progressBar {
                 flex-grow: 1;
-                min-width: 100px;
+                max-width: 600px;
                 background-color: rgb(255, 255, 255);
                 accent-color: #2e8f58;
             }
@@ -205,6 +205,8 @@
                         aria-label="Slide 2"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
                         aria-label="Slide 3"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
                 </div>
                 <br>
                 <div id="image-counter" style="
@@ -216,7 +218,7 @@
                     border-radius: 5px;
                     font-size: 14px;
                     z-index: 10;
-                    ">1 / 4
+                    ">1/4
                 </div>
                 <script>
                     document.addEventListener("DOMContentLoaded", function () {
@@ -247,6 +249,9 @@
                     </div>
                     <div class="carousel-item">
                         <img src="assets/home/3.png" class="d-block w-100" alt="..." style="max-height: 500px; object-fit: contain; margin: auto;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="assets/home/4.png" class="d-block w-100" alt="..." style="max-height: 500px; object-fit: contain; margin: auto;">
                     </div>
                 </div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
@@ -305,31 +310,31 @@
             </p>
             <p>
                 Now, let’s walk through how the interactive map works. Image #3 shows a static image of the map. You can also find the map and app instructions under the 
-                <b>“Menu”</b> tab throughout the tour. If you already feel confident to navigate on your own, you can skip the following explanation and press <b>“Start Tour”</b>, 
+                <b>“Menu”</b> tab <img src="assets/id0/MenuButton.png" alt="Menu tab" style="height: 2em; vertical-align: middle;"> throughout the tour. If you already feel confident to navigate on your own, you can skip the following explanation and press <b>“Start Tour”</b>, 
                 but please make sure you understand how the map and audio features work before heading out. 
-            <p>Once you click the <b>“Start Tour”</b> button, the interactive map will appear on your screen. If <b>GPS is enabled on both your device and browser</b>, 
-                you’ll see a <b>blue circle</b> on the map. That’s you! You can refer to your current location on the map to follow the green route. <b>Pinch to zoom out</b> 
-                if you'd like an overview of the entire route. The <b>center button</b> re-centers the map to your current location and the button below it turns on <b>dark mode</b>.
+            <p>Once you click the <img src="assets/id0/StartTour.png" alt="Start Tour" style="height: 2em; vertical-align: middle;"> button, the interactive map will appear on your screen. If <b>GPS is enabled on both your device and browser</b>, 
+                you’ll see a <b>blue circle</b> on the map <img src="assets/id0/You.png" alt="Location marker" style="height: 2em; vertical-align: middle;">. That’s you! You can refer to your current location on the map to follow the green route <img src="assets/id0/MainRoute.png" alt="green solid line" style="height: 2em; vertical-align: middle;">. <b>Pinch to zoom out</b> 
+                if you'd like an overview of the entire route. The <b>center button</b> <img src="assets/id0/CenterMap.png" alt="Center button" style="height: 2em; vertical-align: middle;"> re-centers the map to your current location and the button below it <img src="assets/id0/DarkModeMap.png" alt="Color mode" style="height: 2em;  vertical-align: middle;"> turns on <b>dark mode</b>.
             </p>
-            <p><b>Follow the numbered green circles on the route to move in the suggested tour direction</b>. These circles represent the 10 main stops, each featuring a different 
+            <p><b>Follow the numbered green circles on the route <img src="assets/id0/GreenCircle.png" alt="Green circle" style="height: 2em; vertical-align: middle;"> to move in the suggested tour direction</b>. These circles represent the 10 main stops, each featuring a different 
                 Green Stormwater Infrastructure practice. At each stop, you'll find an audio narration and an image carousel with photos, diagrams, or maps to help you identify and 
-                understand the practice. You can also read the text version of the narration on your screen. Use the buttons below the image carousel to <b>adjust Font Size and 
-                    switch Color Mode for better readability</b>.
+                understand the practice. You can also read the text version of the narration on your screen. Use the buttons below the image carousel to <b>adjust <img src="assets/id0/FontSize.png" alt="Font Size" style="height: 2em;  vertical-align: middle;"> and 
+                    switch <img src="assets/id0/ColorMode.png" alt="Color Mode" style="height: 2em; vertical-align: middle;"> for better readability</b>.
             </p>
             <p>For each green circle, please <b>stop walking and listen to the full audio</b> before continuing to the next stop. And <b>always stop walking when viewing text or 
                 images for your safety! </b></p>
-            <p>The <b>white circles</b> provide additional context as you walk between green stops and thus you can continue to walk while listening to the white circle audio 
+            <p>The <b>white circles</b> <img src="assets/id0/WhiteCircle.png" alt="White circle" style="height: 2em; vertical-align: middle;"> provide additional context as you walk between green stops and thus you can continue to walk while listening to the white circle audio 
                 or even skip them if you prefer. </p>
             <p>When you enter any circle on the map, green or white, <b>the audio will play automatically,</b> and the images and text will open up on your screen. It may 
                 take a few seconds to load depending on GPS accuracy and internet speed. <b>To avoid delays, we recommend downloading the audio in advance</b>. You can also use 
-                    the <b>audio controls</b> at the top of your screen to pause, rewind, or change playback speed. You can always use the <b>“Back to Map”</b> button to return 
+                    the <b>audio controls</b> <img src="assets/id0/AudioWidget.png" alt="Audio Widget" style="height: 2.5em; vertical-align: middle;"> at the top of your screen to pause, rewind, or change playback speed. You can always use the <img src="assets/id0/BacktoMap.png" alt="Back to Map button" style="height: 2em;  vertical-align: middle;"> button to return 
                     to the map view for navigation. You can tap any green or white circle on the map to manually open that stop’s information and replay its audio anytime. 
-            <p>If you want to return to this screen, tap <b>“Green Shorewood”</b> at the top or select the <b>first white circle</b> on the map.
+            <p>If you want to return to this screen, tap <img src="assets/id0/Title.png" alt="Green Shorewood" style="height: 2.5em;  vertical-align: middle;"> at the top or select the <b>first white circle</b> on the map.
             <p>The tour should take <b>approximately 2 hours</b> to complete. The route mostly follows paved sidewalks but includes a stairwell and a dirt path along the Milwaukee 
                 River. For those who wish to avoid stairs, <b>an alternate accessible route is available</b> near the Oakleaf Trail Bridge on Capitol Drive. This accessible path 
-                is mostly paved but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The accessible route is marked with a <b>dashed green line</b> 
+                is mostly paved but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The accessible route is marked with a <b>dashed green line </b><img src="assets/id0/MainRoute.png" alt="green dashed line" style="height: 2em; vertical-align: middle;"> 
                 on the map, and I will alert you when you reach the fork so that you can follow your preferred pathway.</p>
-            <p>Now, click the <b>“Start Tour”</b> button and walk towards the first green circle on the map. If you are facing the library entrance from the atrium, use the door on 
+            <p>Now, click the <img src="assets/id0/StartTour.png" alt="Start Tour" style="height: 2em; vertical-align: middle;"> button and walk towards the first green circle on the map. If you are facing the library entrance from the atrium, use the door on 
                 your left to exit the building. Begin the tour by exploring our first Green Stormwater Infrastructure feature at the northeast corner of the library.</p>
             
 

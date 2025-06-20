@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="data:,">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shorewood Walking Tour</title>
+    <!--custom stylesheet-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="lib/leaflet/leaflet.css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" id="refreshBrand"><b>Green Shorewood</b></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#"><b>Maps</b></a> -->
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#maps-modal">Maps</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#"><b>Help</b></a> -->
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#help-modal">Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- <a class="nav-link" href="#"><b>About</b></a> -->
+                        <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#about-modal">About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div id="content">
+        <div id="start-container">
+            <!--Header-->
+            <div class="text-center">
+                <h1><b>Welcome to our walking tour!</b></h1>
+            </div>
+
+            <!--Quick Audio Guide-->
+            <p></p>
+            <h4 class="centered-italic"><br>Hit the <b>Play ▶</b> button to start audio</h4>
+            <p></p>
+
+            <!--Audio Widget-->
+            <!--<div class="audiohome">
+                <audio id="homeAudioWidget" controls>
+                    <source src="audio/00_StartingPoint.mp3" type="audio/mpeg">
+                </audio>
+            </div>-->
+            
+            <!-- Custom Audio Player UI -->
+            <div id="custom-audio-container">
+                <button id="togglePlayBtn" class="icon-btn">▶</button>
+
+                <input type="range" id="progressBar" value="0" min="0" step="0.1">
+                <span id="timeDisplay">0:00/0:00</span>
+
+                <!-- Optional Speed Control -->
+                <select id="speedControl">
+                    <option value="0.75">0.75x</option>
+                    <option value="1" selected>1x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="2">2x</option>
+                </select>
+            </div>
+
+            <audio id="homeAudioWidget">
+            <source src="audio/00_StartingPoint.mp3" type="audio/mpeg">
+            </audio>
+
+            <style>
+            #custom-audio-container {
+                display: flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 4px;
+                flex-wrap: nowrap;
+                margin: auto 12px;
+                background-color: rgb(238, 238, 238);
+            }
+
+            #progressBar {
+                flex-grow: 1;
+                min-width: 100px;
+                background-color: rgb(255, 255, 255);
+                accent-color: #2e8f58;
+            }
+
+            #timeDisplay {
+                font-size: 16px;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                white-space: nowrap;
+            }
+
+            button, select {
+                font-size: 16px;
+                font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: rgb(255, 255, 255);
+                padding: 2px 0px;
+                margin-right: 12px; /* Adds space to the right of the dropdown */
+            }
+
+            select#speedControl {
+            font-size: 16px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+
+            .icon-btn {
+                font-size: 40px;
+                border: none;
+                background: none;
+                cursor: pointer;
+                padding: 2px 8px;
+                color: #2e8f58;
+            }
+
+            .icon-btn:focus {
+                outline: none;
+            }
+
+            </style>
+
+            <script>
+            const audio = document.getElementById('homeAudioWidget');
+            const togglePlayBtn = document.getElementById('togglePlayBtn');
+            const progressBar = document.getElementById('progressBar');
+            const timeDisplay = document.getElementById('timeDisplay');
+            const speedControl = document.getElementById('speedControl');
+
+            let isPlaying = false;
+
+            togglePlayBtn.addEventListener('click', () => {
+                if (audio.paused) {
+                audio.play();
+                } else {
+                audio.pause();
+                }
+            });
+
+            audio.addEventListener('play', () => {
+                togglePlayBtn.textContent = '⏸';
+                isPlaying = true;
+            });
+
+            audio.addEventListener('pause', () => {
+                togglePlayBtn.textContent = '▶';
+                isPlaying = false;
+            });
+
+            audio.addEventListener('loadedmetadata', () => {
+                progressBar.max = audio.duration;
+                updateTimeDisplay();
+            });
+
+            audio.addEventListener('timeupdate', () => {
+                progressBar.value = audio.currentTime;
+                updateTimeDisplay();
+            });
+
+            progressBar.addEventListener('input', () => {
+                audio.currentTime = progressBar.value;
+                updateTimeDisplay();
+            });
+
+            speedControl.addEventListener('change', () => {
+                audio.playbackRate = parseFloat(speedControl.value);
+            });
+
+            function updateTimeDisplay() {
+                const current = formatTime(audio.currentTime);
+                const duration = formatTime(audio.duration);
+                timeDisplay.textContent = `${current} / ${duration}`;
+            }
+
+            function formatTime(sec) {
+                const minutes = Math.floor(sec / 60);
+                const seconds = Math.floor(sec % 60).toString().padStart(2, '0');
+                return `${minutes}:${seconds}`;
+            };
+
+            </script>
+            
+            <!--Image Carousel-->
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-interval="false">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
+                        class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                </div>
+                <br>
+                <div id="image-counter" style="
+                    position: absolute;
+                    right: 20px;
+                    background: rgba(100, 100, 100, 0.6);
+                    color: white;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    font-size: 14px;
+                    z-index: 10;
+                    ">1/4
+                </div>
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                    const carousel = document.getElementById("carouselExampleIndicators");
+                    const counter = document.getElementById("image-counter");
+
+                    if (!carousel || !counter) return;
+
+                    const items = carousel.querySelectorAll(".carousel-item");
+                    const totalSlides = items.length;
+
+                    // Initialize correct value
+                    counter.textContent = `1 / ${totalSlides}`;
+
+                    // Add listener to update on slide change
+                    carousel.addEventListener("slid.bs.carousel", function () {
+                        const activeIndex = Array.from(items).findIndex(item => item.classList.contains("active"));
+                        counter.textContent = `${activeIndex + 1} / ${totalSlides}`;
+                    });
+                });
+                </script>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="assets/home/1.png" class="d-block w-100" alt="..." style="max-height: 500px; object-fit: contain; margin: auto;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="assets/home/2.png" class="d-block w-100" alt="..." style="max-height: 500px; object-fit: contain; margin: auto;">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="assets/home/3.png" class="d-block w-100" alt="..." style="max-height: 500px; object-fit: contain; margin: auto;">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                    data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+            <!--Start Tour Button-->
+            <br>
+            <div class="text-center">
+                <button id="start-tour-btn" type="button" class="btn btn-secondary"><b>Start Tour</b></button>
+            </div>
+            
+            <div id="button-container"><br>
+            <button id="toggle-font-size" class="btn btn-primary" d-inline-block>Font Size</button>
+            <button id="toggle-color-mode" class="btn btn-secondary" d-inline-block>Color Mode</button><br>
+            </div>
+            <!--Description-->
+            <p>
+                Hello, and welcome to our <b>Green Stormwater Infrastructure Walking Tour</b> in the Village of Shorewood in Milwaukee County.
+                You should be standing in the <b>Shorewood Public Library atrium</b>. Refer to Image #1 and #2 of the Starting Point image carousel 
+                to confirm you are in the correct location. You can <b>swipe through the images on your screen</b> to view them.
+            </p>
+            <p>
+                The Village of Shorewood is located between the Milwaukee River on the west and Lake Michigan on the east, with the Library 
+                sitting at the midpoint between these watery boundaries. Thus, the Shorewood Public Library serves as a vibrant community hub, 
+                offering resources for learning, connection, and exploration, and therefore is a perfect place to start our tour.
+            </p>
+            <p>
+                Now, let’s dive into the purpose of our tour today. Shorewood’s unique location offers many commercial, recreational, and 
+                aesthetic advantages, but also presents a risk: <b>flooding</b> from increasingly frequent and severe storms due to changing climates. 
+                To manage stormwater, many cities have built large underground sewers and utility systems, known as <b>Gray Stormwater Infrastructure</b>, 
+                which rely on concrete and other unnatural materials to move water away quickly.
+            </p>
+            <p>
+                In contrast, the stops on this tour highlight the innovative <b>“green”</b>, or environmentally-friendly, practices that Shorewood has implemented. 
+                This collection of practices, known as <b>Green Stormwater Infrastructure</b>, utilizes natural solutions to capture and regulate stormwater right 
+                where it falls, alleviating reliance on Gray Stormwater Infrastructure. By doing so, Green Stormwater Infrastructure plays a crucial role in 
+                contributing to a more resilient and sustainable Shorewood community.
+            </p>
+            <br><b>Navigating the app</b>
+            <p><br>Today, you will be using an interactive map to follow a green route that will navigate you to 10 stops along the tour. Before starting the tour, make sure that
+            <ul>•	Your GPS is enabled on both your phone and browser</ul>
+            <ul>•	Your browser screen <b>MUST</b> be open throughout the tour to enable automatic audio playback – do not lock your screen or switch apps</ul>
+            <ul>•	Your phone is fully charged or you have an external battery pack</ul>
+            <ul>•	You are dressed for the season and wearing appropriate footwear!</ul>
+            <ul>•	And for the best experience, use headphones!</ul>
+            </n><b>Most importantly, always watch your step while walking, especially when crossing streets!</b>
+            </p>
+            <p>
+                Now, let’s walk through how the interactive map works. Image #3 shows a static image of the map. You can also find the map and app instructions under the 
+                <b>“Menu”</b> tab throughout the tour. If you already feel confident to navigate on your own, you can skip the following explanation and press <b>“Start Tour”</b>, 
+                but please make sure you understand how the map and audio features work before heading out. 
+            <p>Once you click the <b>“Start Tour”</b> button, the interactive map will appear on your screen. If <b>GPS is enabled on both your device and browser</b>, 
+                you’ll see a <b>blue circle</b> on the map. That’s you! You can refer to your current location on the map to follow the green route. <b>Pinch to zoom out</b> 
+                if you'd like an overview of the entire route. The <b>center button</b> re-centers the map to your current location and the button below it turns on <b>dark mode</b>.
+            </p>
+            <p><b>Follow the numbered green circles on the route to move in the suggested tour direction</b>. These circles represent the 10 main stops, each featuring a different 
+                Green Stormwater Infrastructure practice. At each stop, you'll find an audio narration and an image carousel with photos, diagrams, or maps to help you identify and 
+                understand the practice. You can also read the text version of the narration on your screen. Use the buttons below the image carousel to <b>adjust Font Size and 
+                    switch Color Mode for better readability</b>.
+            </p>
+            <p>For each green circle, please <b>stop walking and listen to the full audio</b> before continuing to the next stop. And <b>always stop walking when viewing text or 
+                images for your safety! </b></p>
+            <p>The <b>white circles</b> provide additional context as you walk between green stops and thus you can continue to walk while listening to the white circle audio 
+                or even skip them if you prefer. </p>
+            <p>When you enter any circle on the map, green or white, <b>the audio will play automatically,</b> and the images and text will open up on your screen. It may 
+                take a few seconds to load depending on GPS accuracy and internet speed. <b>To avoid delays, we recommend downloading the audio in advance</b>. You can also use 
+                    the <b>audio controls</b> at the top of your screen to pause, rewind, or change playback speed. You can always use the <b>“Back to Map”</b> button to return 
+                    to the map view for navigation. You can tap any green or white circle on the map to manually open that stop’s information and replay its audio anytime. 
+            <p>If you want to return to this screen, tap <b>“Green Shorewood”</b> at the top or select the <b>first white circle</b> on the map.
+            <p>The tour should take <b>approximately 2 hours</b> to complete. The route mostly follows paved sidewalks but includes a stairwell and a dirt path along the Milwaukee 
+                River. For those who wish to avoid stairs, <b>an alternate accessible route is available</b> near the Oakleaf Trail Bridge on Capitol Drive. This accessible path 
+                is mostly paved but includes a 100-foot section of unpaved, slightly sloped trail made of dirt and wood chips. The accessible route is marked with a <b>dashed green line</b> 
+                on the map, and I will alert you when you reach the fork so that you can follow your preferred pathway.</p>
+            <p>Now, click the <b>“Start Tour”</b> button and walk towards the first green circle on the map. If you are facing the library entrance from the atrium, use the door on 
+                your left to exit the building. Begin the tour by exploring our first Green Stormwater Infrastructure feature at the northeast corner of the library.</p>
+            
+
+
+            <!--Start Tour Button-->
+            <p></p>
+            <div class="text-center">
+                <button id="start-tour-btn" type="button" class="btn btn-secondary"><b>Start Tour</b></button><br><br><br>
+            </div>
+            <p></p>
+            
+        </div>
+        <div id="map-container" style="display: none;">
+            <div id="map"></div>
+            <button id="toggle-dark-mode">
+                <img src="lib/leaflet/images/layers2.png" alt="Dark Mode" style="width:24px; height:24px;">
+            </button>
+            <button id="center">
+                <img src="lib/leaflet/images/center.png" alt="Center Map" style="width:24px; height:24px;">
+            </button>
+        </div>
+        <!-- <div id="mapdetails-container" style="display: none;">
+            Map details
+        </div>
+        <div id="help-content" style="display: none;">
+            <h2>Help Section</h2>
+            <p>This section provides guidance on using the app.</p>
+        </div>
+        <div id="about-content" style="display: none;">
+            <h2>About</h2>
+            <p>Information about the Shorewood Walking Tour.</p>
+        </div> -->
+
+        <!-- Maps -->
+        <div class="modal fade" id="maps-modal" tabindex="-1" aria-labelledby="maps-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-xl">
+                <div class="modal-content" id="mapinfo-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="Maps-modal-label">Maps</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                         <div id="Map-title"><p><b>Tour Route Map</b></p><img class="mySlidesHome" src="assets/Maps/01.png" style="width:100%"></div>
+                         <div id="Map-title"><br><br><p><b>Shorewood Public Library Map</b></p><img class="mySlidesHome" src="assets/Maps/02.png" style="width:100%"></div>
+                         <div id="Map-title"><br><br><p><b>Green Stormwater Infrastructure Typology</b></p><img class="mySlidesHome" src="assets/Maps/03.png" style="width:100%"></div>
+                         <div id="Map-title"><br><br><p><b>MMSD Service Area Map, Milwaukee</b></p><img class="mySlidesHome" src="assets/Maps/04.png" style="width:100%"></div>
+                         <div id="Map-title"><br><br><p><b>MMSD Service Area Map, Shorewood</b></p></ve><img class="mySlidesHome" src="assets/Maps/05.png" style="width:100%"></div>
+                         <div id="Map-title"><br><br><p><b>Milwaukee Bike Trail Map</b></p><img class="mySlidesHome" src="assets/Maps/06.png" style="width:100%"></div>
+                         <div id="Map-title"><br><br><p><b>Milwauke County Watershed Map</b></p><img class="mySlidesHome" src="assets/Maps/07.png" style="width:100%"></div>
+                         <div id="Map-title"><br><br><p><b>Hubbard Park Map</b></p><img class="mySlidesHome" src="assets/Maps/08.png" style="width:95%"></div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Help -->
+        <div class="modal fade" id="help-modal" tabindex="-1" aria-labelledby="help-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-xl">
+                <div class="modal-content" id="help-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="help-modal-label">Help</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4><b>Navigating to POIs</b></h4>
+                        <p>The map you see after clicking "Start Tour" is an interactive map. You can follow the <b>green route</b> as you navigate to the <b>10 stops</b> along the tour. With GPS location enabled in mobile browser, a <b>blue circle</b> will appear on the map showing live location.</p> 
+                        <p>The <b>green circles</b> represent tour stops at different practices of Green Stormwater Infrastructure. When you enter a circle, the <b>audio narration</b> of the corresponding stop will start playing automatically and the narration page will show up on the screen. Always stop if you are looking at images or if you are inside the green circle to hear full story. Do not enter another circle before finishing the previous auido.
+                        The <b>white circles</b> gives additional audio context about Green Stormwater Infrastructure between stops. You don't have to stop while listening to these.
+                        You can click on any of the circles on the map anytime to see and hear the content of that particular stop.</p>
+                        <P>To <b>zoom</b> in or out the map, you can use the controls on the top-left corner or you can use your fingers to pinch and <b>pan</b> the map. Below the zoom controls, you will a button that looks like a target. Pressing the button will <b>re-center</b> the map to your current location anytime. The last button below the center button will set the map to <b>dark mode</b> and back.</P>
+                        <p>The <b>red warning signs</b> on the map is there to remind you that there is a crossing ahead.</p>
+                        <p>In the mobile view, you will see a <b>Menu</b> button at the bottom corner. Clicking it will bring up three option- "Maps", "Help" and "About". The maps page contains a static map of the route simmilar to the interactive map and all other maps used in the app fr the narration. In the desktop mode you will see a navigation bar with "maps", "help" and "about" options. The <b>Help</b> page has the information you need to navigate the app. The abour page contains metata and details of this tour, the project and our team. </p>
+                        <br>
+                        <h4><b>Narration Content</b></h4>
+                        <p>The story content includes <p>audio narration, text</p> and <b>image carousel with photos, maps and diagrams</b>. The first image in the carousel at each stop to helps with locating the stops. You can use the arrows on the middle left and middle right to navigate the images in the carousel. You can also scroll down to read the text. You can also manually replay the audio or stop a running audio manually anytime. </p>
+                        <p>Each stop content follows a similar structure - 1. locating and introducing the stop, 2. interesting numeracy facts, 3. grey infrastructure behavior and issues in the particualr environment, 4. how Green Infrastructure helps reduce the problems, 5. user prompt and 6. direction to the next stop. The prompts are there to invoke critical thinking and to achieve a learning goal. When you think about the prompt, try to reflect on what you learned and how you can put that learning into practice yourself.</p>   
+                        <br>
+                        <h4><b>Report a problem</b></h4>
+                        <p>If you notice a bug or other issue, please e-mail a brief description to reroth@wisc.edu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- About -->
+        <div class="modal fade" id="about-modal" tabindex="-1" aria-labelledby="about-modal" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-md-down modal-xl">
+                <div class="modal-content" id="about-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title" id="about-modal-label">About</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h4><b>About the Project</b></h4>
+                        <br>
+                        <br>
+                        <h4><b>Our Team Members</b></h4>
+                        <br>
+                        <br>
+                        <h4><b>Data and Information Sources</b></h4>
+                        <br>Map Tiles
+                        <br>Images
+                        <br>Text Information
+                        <br>Map and Chart Data
+                        <br>Icon Credits
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--stop modal-->
+        <div class="modal" id="stop-modal">
+            <div class="modal-dialog" id="stop-dialogue">
+                <div class="modal-content" id="stop-content">
+                    <div class="modal-header">
+                        <div class="col-md-6 offset-md-3 col-sm-12 col-12" id="title-container">
+                            <h1 class="modal-title" id="stop-title"></h1>
+                        </div>
+                    </div>
+                    <div class="modal-body col-md-6 offset-md-3 col-sm-12 col-12" id="stop-image"></div>
+                    <div class="modal-body col-md-6 offset-md-3 col-sm-12 col-12" id="stop-body">
+                    </div>
+                    <div id="stop-footer" class="modal-footer">
+                        <div class="next-container text-center">
+                            <button type="button" id="next" class="btn btn-secondary close" data-bs-dismiss="modal">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--external scripts-->
+    <script type="text/javascript" src="lib/leaflet/leaflet.js"></script>
+    <script type="text/javascript" src="lib/papaparse.js"></script>
+    <script type="text/javascript" src="lib/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,284 @@
+.navbar{
+    background-color: rgb(183, 212, 183);
+    flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        min-height: 100px;
+        flex-wrap: nowrap;
+    }
+
+
+}
+
+h1, h2, h3 {
+    font-family: 'Merriweather', serif !important;
+}
+
+h4 {
+    font-family: 'Lato', sans-serif !important;
+}
+
+.centered-italic {
+    text-align: center;
+    font-style: italic;
+    color: #808080;
+}
+
+#next{
+    font-size: 20px;
+    background-color: #808080;
+    border: 2px solid #808080;
+}
+
+.leaflet-control-scale {
+    font-family: 'Lato', sans-serif;
+    font-size: 16px !important; /* Adjust size as needed */
+    right: 0.5em;
+}
+
+.leaflet-control-scale-line {
+    background: rgba(255, 255, 255, 0.0) !important; /* Background color */
+    border: 2px solid black; /* Border color */
+    color: #808080 !important; /* Text color */
+}
+
+.modal-title {
+    font-family: 'Merriweather', serif !important;
+}
+
+p {
+    font-family: 'Lato', sans-serif;
+}
+
+h1 {
+    color: #2e8f58 !important;
+    font-size: 26px !important;
+}
+
+#button-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+#toggle-font-size{
+    background-color: #808080;
+    border: 2px solid #808080;
+    font-size: 20px;
+}
+
+#toggle-color-mode{
+    background-color: #808080;
+    border: 2px solid #808080;
+    font-size: 20px;
+}
+
+#toggle-font-size {
+    margin-right: auto; /* Aligns to the left */
+}
+
+#toggle-color-mode {
+    margin-left: auto; /* Aligns to the right */
+}
+
+.navbar-brand {
+    color: #265c3d !important;
+    font-weight: bold; 
+    font-size: 30px !important;
+    font-family: 'Merriweather', serif !important;
+}
+
+.navbar-nav .nav-link{
+    color: #265c3d !important;
+    font-weight: bold;
+    font-size: 22px;
+    font-family: 'Merriweather', serif !important;
+}
+
+#start-tour-btn{
+    font-size: 22px;
+    background-color: #2e8f58;
+}
+
+#start-container {
+    max-width: 900px; /* Adjust width as needed */
+    margin: 0 auto; /* Center horizontally */
+    padding: 20px; /* Add some spacing */
+    background-color: white; /* Optional: Make it visually distinct */
+}
+
+.audiohome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#map{
+    width: 100%;
+    height: 100vh;
+}
+
+/*modal styling*/
+#title-container{
+    padding-left:10px;
+}
+#stop-content{
+    width:100vw;
+    margin:0;
+    border-radius: 0;
+}
+#stop-dialogue{
+    height:100vh;
+    margin:0;
+}
+#stop-body{
+    height:100%;
+    font-size: 20px;
+}
+#stop-image{
+    height:100%;
+    font-size: 20px;
+}
+#stop-img{
+    width:100%;
+}
+#stop-text{
+    font-size:20px;
+}
+#stop-footer{
+    display:block !important;
+}
+
+#start-container{
+    font-size:20px;
+    font-family: 'Lato', sans-serif !important;
+}
+
+#map-container {
+    position: relative;
+    height: 100vh; /* NEW: ensures no scrolling needed */
+    overflow: hidden; /* prevent accidental scroll */
+}
+
+#Map-title {
+    font-size: 24px;
+    font-family: 'Merriweather', serif;
+}
+
+#center, #toggle-dark-mode {
+    position:fixed;
+    right: 0.75em;
+    z-index: 1000; /* Ensure they appear above the map */
+    background-color: white; /* Ensure visibility */
+    border: 2px solid rgb(97, 96, 96);
+    padding: 8px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(31, 31, 31, 0.2); /* Optional: adds a slight shadow */
+}
+
+#toggle-dark-mode {
+    bottom: 4.5em; /* Stack above the center button */
+}
+
+#center {
+    bottom: 8em;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/* Darken the carousel arrows */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(220%); /* Adjusts brightness to make it darker */
+}
+
+
+#button-container-stop{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+#toggle-font-size-stop{
+    background-color: #808080;
+    border: 2px solid #808080;
+    font-size: 20px;
+}
+
+#toggle-color-mode-stop{
+    background-color: #808080;
+    border: 2px solid #808080;
+    font-size: 20px;
+}
+
+#toggle-font-size-stop {
+    margin-right: auto; /* Aligns to the left */
+}
+
+#toggle-color-mode-stop {
+    margin-left: auto; /* Aligns to the right */
+}
+
+.carousel-item img {
+    pointer-events: none;
+    touch-action: pan-y;
+  }
+
+.custom-audio-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 4px;
+    flex-wrap: nowrap;
+    margin-right: 12px;
+    background-color: rgb(238, 238, 238);
+}
+
+.progress-bar {
+    flex-grow: 1;
+    min-width: 100px;
+    background-color: rgb(255, 255, 255);
+    accent-color: #2e8f58;
+}
+
+.time-display {
+    font-size: 16px;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    white-space: nowrap;
+}
+
+.icon-btn,
+.speed-control {
+  font-size: 16px;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.speed-control {
+  margin-right: 12px;
+  max-width: 60px;
+}
+
+.icon-btn {
+  font-size: 22px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 6px;
+  color: #2e8f58;
+}
+
+.icon-btn:focus {
+  outline: none;
+}
+

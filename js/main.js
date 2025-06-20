@@ -477,7 +477,7 @@
                     ${i === 1 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${i}"></button>`;
             }
 
-            html += `</div><div id="carousel-counter" style=" position: absolute; top: 10px; right: 10px; background: rgba(100, 100, 100, 0.6); color: white; padding: 4px 8px; border-radius: 5px; font-size: 14px; z-index: 10;">1 / ${props.image}</div>
+            html += `</div><div id="carousel-counter" style=" position: absolute; top: 10px; right: 10px; background: rgba(100, 100, 100, 0.6); color: white; padding: 4px 8px; border-radius: 5px; font-size: 14px; z-index: 10;">1/${props.image}</div>
     
             <div class="carousel-inner">`;
 
@@ -779,6 +779,7 @@
                 // Proceed with tour
                 startContainer.style.display = "none";
                 mapContainer.style.display = "block";
+                document.body.classList.add("no-scroll");
                 createMap();
                 window.scrollTo(0, 0);
             });
@@ -808,13 +809,28 @@
                 touchEndX = event.touches[0].clientX;
             });
 
+            // carousel.addEventListener("touchend", function () {
+            //     if (touchStartX - touchEndX > 50) {
+            //         // Swipe left (Next slide)
+            //         bootstrap.Carousel.getInstance(carousel).next();
+            //     } else if (touchEndX - touchStartX > 50) {
+            //         // Swipe right (Previous slide)
+            //         bootstrap.Carousel.getInstance(carousel).prev();
+            //     }
+            // });
+
             carousel.addEventListener("touchend", function () {
+                let instance = bootstrap.Carousel.getInstance(carousel);
+                if (!instance) {
+                    instance = new bootstrap.Carousel(carousel, { interval: false, wrap: true });
+                }
+
                 if (touchStartX - touchEndX > 50) {
                     // Swipe left (Next slide)
-                    bootstrap.Carousel.getInstance(carousel).next();
+                    instance.next();
                 } else if (touchEndX - touchStartX > 50) {
                     // Swipe right (Previous slide)
-                    bootstrap.Carousel.getInstance(carousel).prev();
+                    instance.prev();
                 }
             });
         }

@@ -5,7 +5,7 @@
 
 @media (max-width: 768px) {
     .navbar {
-        min-height: 100px;
+        min-height: 70px;
         flex-wrap: nowrap;
     }
 }
@@ -86,7 +86,7 @@ h1 {
 .navbar-brand {
     color: #265c3d !important;
     font-weight: bold; 
-    font-size: 32px !important;
+    font-size: 30px !important;
     font-family: 'Merriweather', serif !important;
 }
 
@@ -117,7 +117,7 @@ h1 {
 
 #map{
     width: 100%;
-    height: 100vh;
+    height: calc(100vh - 70px);
 }
 
 /*modal styling*/
@@ -245,7 +245,7 @@ html, body {
 
 .progress-bar {
     flex-grow: 1;
-    max-width: 120px;
+    min-width: 100px;
     background-color: rgb(255, 255, 255);
     accent-color: #2e8f58;
 }
@@ -278,4 +278,14 @@ html, body {
 
 .icon-btn:focus {
   outline: none;
+}
+
+.no-scroll {
+    overflow: hidden;
+    height: 100%;
+}
+
+.carousel-indicators [data-bs-target] {
+    background-color: #424242 !important;
+    opacity: 0 !important;
 }
