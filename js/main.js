@@ -793,7 +793,7 @@
                 // Proceed with tour
                 startContainer.style.display = "none";
                 mapContainer.style.display = "block";
-                document.body.classList.add("no-scroll");
+                //document.body.classList.add("no-scroll");
                 createMap();
                 window.scrollTo(0, 0);
             });
