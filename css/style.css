@@ -288,3 +288,9 @@ html, body {
     background-color: #424242 !important;
     opacity: 0 !important;
 }
+
+body.no-scroll {
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+}

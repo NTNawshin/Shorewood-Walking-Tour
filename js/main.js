@@ -36,6 +36,9 @@
             minZoom: 12
         });
 
+        map.getContainer().addEventListener("touchstart", function () {
+            window.scrollTo(0, 0);
+        });
 
         //add north indicator
         var northArrow = L.Control.extend({
