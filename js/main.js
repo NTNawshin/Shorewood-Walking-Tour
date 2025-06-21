@@ -488,7 +488,6 @@
                 </div>`;
             }
 
-            /*
             html += `</div>
                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -499,9 +498,21 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>`;
-            */
 
             document.querySelector("#stop-image").insertAdjacentHTML("beforeend", html);
+        }
+
+        // Inject video for a specific stop ID
+        if (props.id == "16") {
+            let videoHTML = `
+                <div style="text-align: center; margin-top: 20px;">
+                    <video controls style="max-width: 100%;">
+                        <source src="assets/id16/GhostTrain.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            `;
+            document.querySelector("#stop-image").insertAdjacentHTML("beforeend", videoHTML);
         }
 
         document.getElementById("stop-modal").addEventListener("shown.bs.modal", function () {
