@@ -1,3 +1,4 @@
+
 (function () {
 
     let map, route, stops, locationMarker, circle, currentStop = 1, tourLength = 0, center = false, played = [];
@@ -38,7 +39,6 @@
         map.getContainer().addEventListener("touchstart", function () {
             window.scrollTo(0, 0);
         });
-
 
         //add north indicator
         var northArrow = L.Control.extend({
@@ -138,22 +138,12 @@
 
             if (distance <= stopRadius && !played.includes(layer.feature.properties.id)) {
                 played.push(layer.feature.properties.id);
-
-                if (currentAudio) 
-                {
-                    if (currentAudio.querySelector('source').getAttribute('src').split('/').pop() == layer.feature.properties.audio) {
-                        audioStartTime = currentAudio.currentTime + 1
-                    }
-                    else {
-                        currentAudio.pause();
-                        currentAudio.currentTime = 0;
-                        audioStartTime = 0;
-                    }
+                // ✅ Stop any currently playing audio
+                if (currentAudio && !currentAudio.paused) {
+                    currentAudio.pause();
+                    currentAudio.currentTime = 0;
                 }
-                else{
-                    audioStartTime = 0;
-                }
-                
+                audioStartTime = 0;
                 openModal(layer.feature.properties);
                 break;
             }
@@ -286,8 +276,11 @@
                         //open modal if layer is not hidden
                         layer.on('click', function () {
                             if (feature.properties.hidden != "true") {
+                                console.log(currentAudio)
                                 // If audio is playing, log the current time
                                 if (currentAudio) {
+                                    console.log(currentAudio.querySelector('source').getAttribute('src').split('/').pop())
+                                    console.log(feature.properties.audio)
                                     if (currentAudio.querySelector('source').getAttribute('src').split('/').pop() == feature.properties.audio) {
                                         audioStartTime = currentAudio.currentTime + 1
                                     }
@@ -295,6 +288,7 @@
                                         audioStartTime = 0;
                                     }
                                 }
+                                console.log("Audio Start Time: " + audioStartTime);
                                 openModal(feature.properties)
                             }
                         })
@@ -541,7 +535,7 @@
         const counterEl = document.getElementById("carousel-counter");
 
         if (counterEl) {
-            counterEl.textContent = `${activeIndex + 1}/${totalSlides}`;
+            counterEl.textContent = `${activeIndex + 1} / ${totalSlides}`;
         }
     });
 });

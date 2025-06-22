@@ -230,12 +230,12 @@
                     const totalSlides = items.length;
 
                     // Initialize correct value
-                    counter.textContent = `1 / ${totalSlides}`;
+                    counter.textContent = `1/${totalSlides}`;
 
                     // Add listener to update on slide change
                     carousel.addEventListener("slid.bs.carousel", function () {
                         const activeIndex = Array.from(items).findIndex(item => item.classList.contains("active"));
-                        counter.textContent = `${activeIndex + 1} / ${totalSlides}`;
+                        counter.textContent = `${activeIndex + 1}/${totalSlides}`;
                     });
                 });
                 </script>
@@ -278,7 +278,7 @@
             <!--Description-->
             <p>
                 Hello, and welcome to our <b>Green Stormwater Infrastructure Walking Tour</b> in the Village of Shorewood in Milwaukee County.
-                You should be standing in the <b>Shorewood Public Library atrium</b>. Refer to Image #1 and #2 of the Starting Point image carousel 
+                You should be standing in the <b>Shorewood Public Library atrium</b>. Refer to Image #1, #2 and #3 of the Starting Point image carousel 
                 to confirm you are in the correct location. You can <b>swipe through the images on your screen</b> to view them.
             </p>
             <p>
@@ -308,7 +308,7 @@
             </n><b>Most importantly, always watch your step while walking, especially when crossing streets!</b>
             </p>
             <p>
-                Now, let’s walk through how the interactive map works. Image #3 shows a static image of the map. You can also find the map and app instructions under the 
+                Now, let’s walk through how the interactive map works. Image #4 shows a static image of the map. You can also find the map and app instructions under the 
                 <b>“Menu”</b> tab <img src="assets/id0/MenuButton.png" alt="Menu tab" style="height: 1.75em; vertical-align: middle;"> throughout the tour. If you already feel confident to navigate on your own, you can skip the following explanation and press <b>“Start Tour”</b>, 
                 but please make sure you understand how the map and audio features work before heading out. 
             <p>Once you click the <img src="assets/id0/StartTour.png" alt="Start Tour" style="height: 2em; vertical-align: middle;"> button, the interactive map will appear on your screen. If <b>GPS is enabled on both your device and browser</b>, 
