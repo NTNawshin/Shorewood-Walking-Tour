@@ -258,6 +258,7 @@ html, body {
     align-items: center;
     gap: 6px;
     padding: 6px;
+    margin: auto;
     width: 100%;
     box-sizing: border-box;
     background-color: #eee;
