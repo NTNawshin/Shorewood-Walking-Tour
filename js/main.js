@@ -759,7 +759,40 @@
         isLargeFont = !isLargeFont;
     }
 
+    function cacheLoading(){
+        if (navigator.serviceWorker) {
+            const cacheStatus = document.getElementById("cache-status");
+            if (cacheStatus) {
+                cacheStatus.textContent = "Caching audio files...";
+            }
+
+            navigator.serviceWorker.register('service-worker.js').then(function(reg) {
+                if (reg.installing) {
+                    reg.installing.onstatechange = function() {
+                        if (reg.waiting || reg.active) {
+                            if (cacheStatus) {
+                                cacheStatus.textContent = "All files cached";
+                            }
+                        }
+                    };
+                } else if (reg.active) {
+                    if (cacheStatus) {
+                        cacheStatus.textContent = "All files cached";
+                    }
+                }
+            }).catch(function(error) {
+                console.log('Registration failed with ' + error);
+                if (cacheStatus) {
+                    cacheStatus.textContent = "Audio caching failed";
+                }
+            });
+        }
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
+
+        cacheLoading();
+
         const startTourButtons = document.querySelectorAll("#start-tour-btn");
         const startContainer = document.getElementById("start-container");
         const mapContainer = document.getElementById("map-container");
@@ -774,27 +807,6 @@
 
         startTourButtons.forEach(button => {
             button.addEventListener("click", async function () {
-                const loadingMsg = document.createElement("p");
-                loadingMsg.textContent = "Preparing tour: Caching audio files for offline use...";
-                loadingMsg.style.textAlign = "center";
-                loadingMsg.style.color = "#2e8f58";
-                startContainer.appendChild(loadingMsg);
-
-                // Register the service worker
-                if ('serviceWorker' in navigator) {
-                    try {
-                        await navigator.serviceWorker.register('/service-worker.js');
-                        console.log('Service Worker registered');
-
-                        // Wait 2 seconds as a buffer (optional)
-                        await new Promise((resolve) => setTimeout(resolve, 2000));
-
-                        loadingMsg.textContent = "Tour is ready! Starting...";
-                    } catch (error) {
-                        console.error("Service Worker registration failed:", error);
-                        loadingMsg.textContent = "Error preparing offline audio. Starting tour anyway.";
-                    }
-                }
 
                 // Proceed with tour
                 startContainer.style.display = "none";
@@ -870,6 +882,8 @@
             toggleColorModeButton.addEventListener("click", toggleColorMode);
         }
     });
+
+    
 
 
 })();
