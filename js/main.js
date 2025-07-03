@@ -47,6 +47,7 @@
             zoom: 18,
             maxZoom: 22,
             minZoom: 12
+
         });
 
         map.getContainer().addEventListener("touchstart", function () {
@@ -82,6 +83,7 @@
             attribution: '',
             subdomains: 'abcd',
             maxZoom: 20
+            
         });
 
         map.on('locationfound', onLocationFound);
