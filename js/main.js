@@ -26,6 +26,20 @@
     // Track dark mode state
     let isDarkMode = false;
 
+    const audioFiles = [
+        "00_StartingPoint.mp3", "01.0_PlanterBox.mp3", "01.1_Walk.mp3",
+        "01.2_Walk.mp3", "02.0_Bioswale.mp3", "02.1_Walk up Driveway.mp3",
+        "03.0_UrbanGardenUrbanFarm.mp3", "03.1_Walk.mp3", "04.0_BioinfiltrationStructures.mp3",
+        "04.1_Walk.mp3", "04.2_Walk.mp3", "04.3_Walk.mp3",
+        "05.0_StormwaterTrees.mp3", "05.1_Walk.mp3", "05.2_Walk.mp3",
+        "06.0_RainGarden.mp3", "06.1_Walk.mp3", "07.0_NatureCorridor.mp3",
+        "07.1_Walk.mp3", "07.2_Walk.mp3", "08.0_Gabions.mp3",
+        "08.1_Walk.mp3", "09.0_StreamGauge.mp3", "09.1_Walk.mp3",
+        "10.0_PermeablePavement.mp3", "10.1_Walk_PermeableDriveway.mp3", "10.2_Walk_DownspoutsAndSS.mp3",
+        "10.3_EndofTour.mp3", "10.4_FunTask.mp3", "10.5_EndTour.mp3",
+        "A_RainBarrels.mp3"
+    ];
+
 
     function createMap() {
         map = L.map("map", {
@@ -766,7 +780,7 @@
                 cacheStatus.textContent = "Caching audio files...";
             }
 
-            navigator.serviceWorker.register('service-worker.js').then(function(reg) {
+            navigator.serviceWorker.register('service-worker.js', { scope: './' }).then(function(reg) {
                 if (reg.installing) {
                     reg.installing.onstatechange = function() {
                         if (reg.waiting || reg.active) {
@@ -789,9 +803,18 @@
         }
     }
 
+    function preloadAudio() {
+        audioFiles.forEach(file => {
+            const audio = new Audio();
+            audio.src = `audio/${file}`;
+            // Do not play; just force browser to load it
+        });
+    }
+
     document.addEventListener("DOMContentLoaded", function () {
 
         cacheLoading();
+        preloadAudio();
 
         const startTourButtons = document.querySelectorAll("#start-tour-btn");
         const startContainer = document.getElementById("start-container");
