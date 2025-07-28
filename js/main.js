@@ -193,7 +193,7 @@
                 }).addTo(map)
             })
 
-        fetch("data/Route_acc_alt4.geojson")
+        fetch("data/Route_A.geojson")
             .then(res => res.json())
             .then(data => {
                 route = L.geoJson(data, {
